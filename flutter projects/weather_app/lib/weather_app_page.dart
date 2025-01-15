@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 
 import 'private.dart';
 import 'package:flutter/material.dart';
-import 'package:Weather/add_info_card.dart';
-import 'package:Weather/hourly_card.dart';
+import 'package:weather/add_info_card.dart';
+import 'package:weather/hourly_card.dart';
 import 'package:http/http.dart' as http;
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
@@ -86,7 +86,7 @@ catch (e) {
                            
                              Text('${temp.toString()} K',style: const TextStyle(fontSize: 32,fontWeight:FontWeight.bold ),),
                                const SizedBox(height: 10,),
-                           Icon(weather=='Rain' ||weather=='Cloud'? Icons.cloud:Icons.sunny,size: 64,),
+                           Icon(weather=='Rain' ||weather=='Clouds'? Icons.cloud:Icons.sunny,size: 64,),
                            const SizedBox(height: 10,),
                             Text(weather,style: const TextStyle(fontSize: 20),),
                               
