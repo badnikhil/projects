@@ -1,0 +1,644 @@
+[33mcommit 3bdc9c57cafec1b75ef11d2aecfdf3dd97e20d03[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Nikhil <nikhilljatt@gmail.com>
+Date:   Wed Jan 15 23:20:59 2025 +0530
+
+    Shopping APP
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..29a3a50[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore[m
+[36m@@ -0,0 +1,43 @@[m
+[32m+[m[32m# Miscellaneous[m
+[32m+[m[32m*.class[m
+[32m+[m[32m*.log[m
+[32m+[m[32m*.pyc[m
+[32m+[m[32m*.swp[m
+[32m+[m[32m.DS_Store[m
+[32m+[m[32m.atom/[m
+[32m+[m[32m.buildlog/[m
+[32m+[m[32m.history[m
+[32m+[m[32m.svn/[m
+[32m+[m[32mmigrate_working_dir/[m
+[32m+[m
+[32m+[m[32m# IntelliJ related[m
+[32m+[m[32m*.iml[m
+[32m+[m[32m*.ipr[m
+[32m+[m[32m*.iws[m
+[32m+[m[32m.idea/[m
+[32m+[m
+[32m+[m[32m# The .vscode folder contains launch configuration and tasks you configure in[m
+[32m+[m[32m# VS Code which you may wish to be included in version control, so this line[m
+[32m+[m[32m# is commented out by default.[m
+[32m+[m[32m#.vscode/[m
+[32m+[m
+[32m+[m[32m# Flutter/Dart/Pub related[m
+[32m+[m[32m**/doc/api/[m
+[32m+[m[32m**/ios/Flutter/.last_build_id[m
+[32m+[m[32m.dart_tool/[m
+[32m+[m[32m.flutter-plugins[m
+[32m+[m[32m.flutter-plugins-dependencies[m
+[32m+[m[32m.pub-cache/[m
+[32m+[m[32m.pub/[m
+[32m+[m[32m/build/[m
+[32m+[m
+[32m+[m[32m# Symbolication related[m
+[32m+[m[32mapp.*.symbols[m
+[32m+[m
+[32m+[m[32m# Obfuscation related[m
+[32m+[m[32mapp.*.map.json[m
+[32m+[m
+[32m+[m[32m# Android Studio will place build artifacts here[m
+[32m+[m[32m/android/app/debug[m
+[32m+[m[32m/android/app/profile[m
+[32m+[m[32m/android/app/release[m
+[1mdiff --git a/.metadata b/.metadata[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c2aa44b[m
+[1m--- /dev/null[m
+[1m+++ b/.metadata[m
+[36m@@ -0,0 +1,45 @@[m
+[32m+[m[32m# This file tracks properties of this Flutter project.[m
+[32m+[m[32m# Used by Flutter tool to assess capabilities and perform upgrades etc.[m
+[32m+[m[32m#[m
+[32m+[m[32m# This file should be version controlled and should not be manually edited.[m
+[32m+[m
+[32m+[m[32mversion:[m
+[32m+[m[32m  revision: "603104015dd692ea3403755b55d07813d5cf8965"[m
+[32m+[m[32m  channel: "stable"[m
+[32m+[m
+[32m+[m[32mproject_type: app[m
+[32m+[m
+[32m+[m[32m# Tracks metadata for the flutter migrate command[m
+[32m+[m[32mmigration:[m
+[32m+[m[32m  platforms:[m
+[32m+[m[32m    - platform: root[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m    - platform: android[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m    - platform: ios[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m    - platform: linux[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m    - platform: macos[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m    - platform: web[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m    - platform: windows[m
+[32m+[m[32m      create_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m[32m      base_revision: 603104015dd692ea3403755b55d07813d5cf8965[m
+[32m+[m
+[32m+[m[32m  # User provided section[m
+[32m+[m
+[32m+[m[32m  # List of Local paths (relative to this file) that should be[m
+[32m+[m[32m  # ignored by the migrate tool.[m
+[32m+[m[32m  #[m
+[32m+[m[32m  # Files that are not part of the templates will be ignored by default.[m
+[32m+[m[32m  unmanaged_files:[m
+[32m+[m[32m    - 'lib/main.dart'[m
+[32m+[m[32m    - 'ios/Runner.xcodeproj/project.pbxproj'[m
+[1mdiff --git a/README.md b/README.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c3fff59[m
+[1m--- /dev/null[m
+[1m+++ b/README.md[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32m# shop_app[m
+[32m+[m
+[32m+[m[32mA new Flutter project.[m
+[32m+[m
+[32m+[m[32m## Getting Started[m
+[32m+[m
+[32m+[m[32mThis project is a starting point for a Flutter application.[m
+[32m+[m
+[32m+[m[32mA few resources to get you started if this is your first Flutter project:[m
+[32m+[m
+[32m+[m[32m- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)[m
+[32m+[m[32m- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)[m
+[32m+[m
+[32m+[m[32mFor help getting started with Flutter development, view the[m
+[32m+[m[32m[online documentation](https://docs.flutter.dev/), which offers tutorials,[m
+[32m+[m[32msamples, guidance on mobile development, and a full API reference.[m
+[1mdiff --git a/analysis_options.yaml b/analysis_options.yaml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0d29021[m
+[1m--- /dev/null[m
+[1m+++ b/analysis_options.yaml[m
+[36m@@ -0,0 +1,28 @@[m
+[32m+[m[32m# This file configures the analyzer, which statically analyzes Dart code to[m
+[32m+[m[32m# check for errors, warnings, and lints.[m
+[32m+[m[32m#[m
+[32m+[m[32m# The issues identified by the analyzer are surfaced in the UI of Dart-enabled[m
+[32m+[m[32m# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be[m
+[32m+[m[32m# invoked from the command line by running `flutter analyze`.[m
+[32m+[m
+[32m+[m[32m# The following line activates a set of recommended lints for Flutter apps,[m
+[32m+[m[32m# packages, and plugins designed to encourage good coding practices.[m
+[32m+[m[32minclude: package:flutter_lints/flutter.yaml[m
+[32m+[m
+[32m+[m[32mlinter:[m
+[32m+[m[32m  # The lint rules applied to this project can be customized in the[m
+[32m+[m[32m  # section below to disable rules from the `package:flutter_lints/flutter.yaml`[m
+[32m+[m[32m  # included above or to enable additional rules. A list of all available lints[m
+[32m+[m[32m  # and their documentation is published at https://dart.dev/lints.[m
+[32m+[m[32m  #[m
+[32m+[m[32m  # Instead of disabling a lint rule for the entire project in the[m
+[32m+[m[32m  # section below, it can also be suppressed for a single line of code[m
+[32m+[m[32m  # or a specific dart file by using the `// ignore: name_of_lint` and[m
+[32m+[m[32m  # `// ignore_for_file: name_of_lint` syntax on the line or in the file[m
+[32m+[m[32m  # producing the lint.[m
+[32m+[m[32m  rules:[m
+[32m+[m[32m    # avoid_print: false  # Uncomment to disable the `avoid_print` rule[m
+[32m+[m[32m    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule[m
+[32m+[m
+[32m+[m[32m# Additional information about this file can be found at[m
+[32m+[m[32m# https://dart.dev/guides/language/analysis-options[m
+[1mdiff --git a/android/.gitignore b/android/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..55afd91[m
+[1m--- /dev/null[m
+[1m+++ b/android/.gitignore[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32mgradle-wrapper.jar[m
+[32m+[m[32m/.gradle[m
+[32m+[m[32m/captures/[m
+[32m+[m[32m/gradlew[m
+[32m+[m[32m/gradlew.bat[m
+[32m+[m[32m/local.properties[m
+[32m+[m[32mGeneratedPluginRegistrant.java[m
+[32m+[m
+[32m+[m[32m# Remember to never publicly share your keystore.[m
+[32m+[m[32m# See https://flutter.dev/to/reference-keystore[m
+[32m+[m[32mkey.properties[m
+[32m+[m[32m**/*.keystore[m
+[32m+[m[32m**/*.jks[m
+[1mdiff --git a/android/app/build.gradle b/android/app/build.gradle[m
+[1mnew file mode 100644[m
+[1mindex 0000000..92f0434[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/build.gradle[m
+[36m@@ -0,0 +1,44 @@[m
+[32m+[m[32mplugins {[m
+[32m+[m[32m    id "com.android.application"[m
+[32m+[m[32m    id "kotlin-android"[m
+[32m+[m[32m    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.[m
+[32m+[m[32m    id "dev.flutter.flutter-gradle-plugin"[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mandroid {[m
+[32m+[m[32m    namespace = "com.example.shop_app"[m
+[32m+[m[32m    compileSdk = flutter.compileSdkVersion[m
+[32m+[m[32m    ndkVersion = flutter.ndkVersion[m
+[32m+[m
+[32m+[m[32m    compileOptions {[m
+[32m+[m[32m        sourceCompatibility = JavaVersion.VERSION_1_8[m
+[32m+[m[32m        targetCompatibility = JavaVersion.VERSION_1_8[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    kotlinOptions {[m
+[32m+[m[32m        jvmTarget = JavaVersion.VERSION_1_8[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    defaultConfig {[m
+[32m+[m[32m        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).[m
+[32m+[m[32m        applicationId = "com.example.shop_app"[m
+[32m+[m[32m        // You can update the following values to match your application needs.[m
+[32m+[m[32m        // For more information, see: https://flutter.dev/to/review-gradle-config.[m
+[32m+[m[32m        minSdk = flutter.minSdkVersion[m
+[32m+[m[32m        targetSdk = flutter.targetSdkVersion[m
+[32m+[m[32m        versionCode = flutter.versionCode[m
+[32m+[m[32m        versionName = flutter.versionName[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    buildTypes {[m
+[32m+[m[32m        release {[m
+[32m+[m[32m            // TODO: Add your own signing config for the release build.[m
+[32m+[m[32m            // Signing with the debug keys for now, so `flutter run --release` works.[m
+[32m+[m[32m            signingConfig = signingConfigs.debug[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mflutter {[m
+[32m+[m[32m    source = "../.."[m
+[32m+[m[32m}[m
+[1mdiff --git a/android/app/src/debug/AndroidManifest.xml b/android/app/src/debug/AndroidManifest.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..399f698[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/debug/AndroidManifest.xml[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32m<manifest xmlns:android="http://schemas.android.com/apk/res/android">[m
+[32m+[m[32m    <!-- The INTERNET permission is required for development. Specifically,[m
+[32m+[m[32m         the Flutter tool needs it to communicate with the running application[m
+[32m+[m[32m         to allow setting breakpoints, to provide hot reload, etc.[m
+[32m+[m[32m    -->[m
+[32m+[m[32m    <uses-permission android:name="android.permission.INTERNET"/>[m
+[32m+[m[32m</manifest>[m
+[1mdiff --git a/android/app/src/main/AndroidManifest.xml b/android/app/src/main/AndroidManifest.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9a4f5b9[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/main/AndroidManifest.xml[m
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32m<manifest xmlns:android="http://schemas.android.com/apk/res/android">[m
+[32m+[m[32m    <application android:label="Shopping App" android:name="${applicationName}" android:icon="@mipmap/ic_launcher">[m
+[32m+[m[32m        <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:taskAffinity="" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">[m
+[32m+[m[32m            <!-- Specifies an Android theme to apply to this Activity as soon as[m
+[32m+[m[32m                 the Android process has started. This theme is visible to the user[m
+[32m+[m[32m                 while the Flutter UI initializes. After that, this theme continues[m
+[32m+[m[32m                 to determine the Window background behind the Flutter UI. -->[m
+[32m+[m[32m            <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme"/>[m
+[32m+[m[32m            <intent-filter>[m
+[32m+[m[32m                <action android:name="android.intent.action.MAIN"/>[m
+[32m+[m[32m                <category android:name="android.intent.category.LAUNCHER"/>[m
+[32m+[m[32m            </intent-filter>[m
+[32m+[m[32m        </activity>[m
+[32m+[m[32m        <!-- Don't delete the meta-data below.[m
+[32m+[m[32m             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->[m
+[32m+[m[32m        <meta-data android:name="flutterEmbedding" android:value="2"/>[m
+[32m+[m[32m    </application>[m
+[32m+[m[32m    <!-- Required to query activities that can process text, see:[m
+[32m+[m[32m         https://developer.android.com/training/package-visibility and[m
+[32m+[m[32m         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.[m
+[32m+[m
+[32m+[m[32m         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->[m
+[32m+[m[32m    <queries>[m
+[32m+[m[32m        <intent>[m
+[32m+[m[32m            <action android:name="android.intent.action.PROCESS_TEXT"/>[m
+[32m+[m[32m            <data android:mimeType="text/plain"/>[m
+[32m+[m[32m        </intent>[m
+[32m+[m[32m    </queries>[m
+[32m+[m[32m</manifest>[m
+[1mdiff --git a/android/app/src/main/kotlin/com/example/shop_app/MainActivity.kt b/android/app/src/main/kotlin/com/example/shop_app/MainActivity.kt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2c4e89e[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/main/kotlin/com/example/shop_app/MainActivity.kt[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32mpackage com.example.shop_app[m
+[32m+[m
+[32m+[m[32mimport io.flutter.embedding.android.FlutterActivity[m
+[32m+[m
+[32m+[m[32mclass MainActivity: FlutterActivity()[m
+[1mdiff --git a/android/app/src/main/res/drawable-v21/launch_background.xml b/android/app/src/main/res/drawable-v21/launch_background.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f74085f[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/main/res/drawable-v21/launch_background.xml[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<!-- Modify this file to customize your launch splash screen -->[m
+[32m+[m[32m<layer-list xmlns:android="http://schemas.android.com/apk/res/android">[m
+[32m+[m[32m    <item android:drawable="?android:colorBackground" />[m
+[32m+[m
+[32m+[m[32m    <!-- You can insert your own image assets here -->[m
+[32m+[m[32m    <!-- <item>[m
+[32m+[m[32m        <bitmap[m
+[32m+[m[32m            android:gravity="center"[m
+[32m+[m[32m            android:src="@mipmap/launch_image" />[m
+[32m+[m[32m    </item> -->[m
+[32m+[m[32m</layer-list>[m
+[1mdiff --git a/android/app/src/main/res/drawable/launch_background.xml b/android/app/src/main/res/drawable/launch_background.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..304732f[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/main/res/drawable/launch_background.xml[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<!-- Modify this file to customize your launch splash screen -->[m
+[32m+[m[32m<layer-list xmlns:android="http://schemas.android.com/apk/res/android">[m
+[32m+[m[32m    <item android:drawable="@android:color/white" />[m
+[32m+[m
+[32m+[m[32m    <!-- You can insert your own image assets here -->[m
+[32m+[m[32m    <!-- <item>[m
+[32m+[m[32m        <bitmap[m
+[32m+[m[32m            android:gravity="center"[m
+[32m+[m[32m            android:src="@mipmap/launch_image" />[m
+[32m+[m[32m    </item> -->[m
+[32m+[m[32m</layer-list>[m
+[1mdiff --git a/android/app/src/main/res/mipmap-hdpi/ic_launcher.png b/android/app/src/main/res/mipmap-hdpi/ic_launcher.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b772242[m
+Binary files /dev/null and b/android/app/src/main/res/mipmap-hdpi/ic_launcher.png differ
+[1mdiff --git a/android/app/src/main/res/mipmap-mdpi/ic_launcher.png b/android/app/src/main/res/mipmap-mdpi/ic_launcher.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b772242[m
+Binary files /dev/null and b/android/app/src/main/res/mipmap-mdpi/ic_launcher.png differ
+[1mdiff --git a/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png b/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b772242[m
+Binary files /dev/null and b/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png differ
+[1mdiff --git a/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png b/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b772242[m
+Binary files /dev/null and b/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png differ
+[1mdiff --git a/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png b/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b772242[m
+Binary files /dev/null and b/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png differ
+[1mdiff --git a/android/app/src/main/res/values-night/styles.xml b/android/app/src/main/res/values-night/styles.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..06952be[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/main/res/values-night/styles.xml[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<resources>[m
+[32m+[m[32m    <!-- Theme applied to the Android Window while the process is starting when the OS's Dark Mode setting is on -->[m
+[32m+[m[32m    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">[m
+[32m+[m[32m        <!-- Show a splash screen on the activity. Automatically removed when[m
+[32m+[m[32m             the Flutter engine draws its first frame -->[m
+[32m+[m[32m        <item name="android:windowBackground">@drawable/launch_background</item>[m
+[32m+[m[32m    </style>[m
+[32m+[m[32m    <!-- Theme applied to the Android Window as soon as the process has started.[m
+[32m+[m[32m         This theme determines the color of the Android Window while your[m
+[32m+[m[32m         Flutter UI initializes, as well as behind your Flutter UI while its[m
+[32m+[m[32m         running.[m
+[32m+[m
+[32m+[m[32m         This Theme is only used starting with V2 of Flutter's Android embedding. -->[m
+[32m+[m[32m    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">[m
+[32m+[m[32m        <item name="android:windowBackground">?android:colorBackground</item>[m
+[32m+[m[32m    </style>[m
+[32m+[m[32m</resources>[m
+[1mdiff --git a/android/app/src/main/res/values/styles.xml b/android/app/src/main/res/values/styles.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..cb1ef88[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/main/res/values/styles.xml[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<resources>[m
+[32m+[m[32m    <!-- Theme applied to the Android Window while the process is starting when the OS's Dark Mode setting is off -->[m
+[32m+[m[32m    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">[m
+[32m+[m[32m        <!-- Show a splash screen on the activity. Automatically removed when[m
+[32m+[m[32m             the Flutter engine draws its first frame -->[m
+[32m+[m[32m        <item name="android:windowBackground">@drawable/launch_background</item>[m
+[32m+[m[32m    </style>[m
+[32m+[m[32m    <!-- Theme applied to the Android Window as soon as the process has started.[m
+[32m+[m[32m         This theme determines the color of the Android Window while your[m
+[32m+[m[32m         Flutter UI initializes, as well as behind your Flutter UI while its[m
+[32m+[m[32m         running.[m
+[32m+[m
+[32m+[m[32m         This Theme is only used starting with V2 of Flutter's Android embedding. -->[m
+[32m+[m[32m    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">[m
+[32m+[m[32m        <item name="android:windowBackground">?android:colorBackground</item>[m
+[32m+[m[32m    </style>[m
+[32m+[m[32m</resources>[m
+[1mdiff --git a/android/app/src/profile/AndroidManifest.xml b/android/app/src/profile/AndroidManifest.xml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..399f698[m
+[1m--- /dev/null[m
+[1m+++ b/android/app/src/profile/AndroidManifest.xml[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32m<manifest xmlns:android="http://schemas.android.com/apk/res/android">[m
+[32m+[m[32m    <!-- The INTERNET permission is required for development. Specifically,[m
+[32m+[m[32m         the Flutter tool needs it to communicate with the running application[m
+[32m+[m[32m         to allow setting breakpoints, to provide hot reload, etc.[m
+[32m+[m[32m    -->[m
+[32m+[m[32m    <uses-permission android:name="android.permission.INTERNET"/>[m
+[32m+[m[32m</manifest>[m
+[1mdiff --git a/android/build.gradle b/android/build.gradle[m
+[1mnew file mode 100644[m
+[1mindex 0000000..d2ffbff[m
+[1m--- /dev/null[m
+[1m+++ b/android/build.gradle[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32mallprojects {[m
+[32m+[m[32m    repositories {[m
+[32m+[m[32m        google()[m
+[32m+[m[32m        mavenCentral()[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mrootProject.buildDir = "../build"[m
+[32m+[m[32msubprojects {[m
+[32m+[m[32m    project.buildDir = "${rootProject.buildDir}/${project.name}"[m
+[32m+[m[32m}[m
+[32m+[m[32msubprojects {[m
+[32m+[m[32m    project.evaluationDependsOn(":app")[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mtasks.register("clean", Delete) {[m
+[32m+[m[32m    delete rootProject.buildDir[m
+[32m+[m[32m}[m
+[1mdiff --git a/android/gradle.properties b/android/gradle.properties[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2597170[m
+[1m--- /dev/null[m
+[1m+++ b/android/gradle.properties[m
+[36m@@ -0,0 +1,3 @@[m
+[32m+[m[32morg.gradle.jvmargs=-Xmx4G -XX:MaxMetaspaceSize=2G -XX:+HeapDumpOnOutOfMemoryError[m
+[32m+[m[32mandroid.useAndroidX=true[m
+[32m+[m[32mandroid.enableJetifier=true[m
+[1mdiff --git a/android/gradle/wrapper/gradle-wrapper.properties b/android/gradle/wrapper/gradle-wrapper.properties[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7bb2df6[m
+[1m--- /dev/null[m
+[1m+++ b/android/gradle/wrapper/gradle-wrapper.properties[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32mdistributionBase=GRADLE_USER_HOME[m
+[32m+[m[32mdistributionPath=wrapper/dists[m
+[32m+[m[32mzipStoreBase=GRADLE_USER_HOME[m
+[32m+[m[32mzipStorePath=wrapper/dists[m
+[32m+[m[32mdistributionUrl=https\://services.gradle.org/distributions/gradle-8.3-all.zip[m
+[1mdiff --git a/android/settings.gradle b/android/settings.gradle[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b9e43bd[m
+[1m--- /dev/null[m
+[1m+++ b/android/settings.gradle[m
+[36m@@ -0,0 +1,25 @@[m
+[32m+[m[32mpluginManagement {[m
+[32m+[m[32m    def flutterSdkPath = {[m
+[32m+[m[32m        def properties = new Properties()[m
+[32m+[m[32m        file("local.properties").withInputStream { properties.load(it) }[m
+[32m+[m[32m        def flutterSdkPath = properties.getProperty("flutter.sdk")[m
+[32m+[m[32m        assert flutterSdkPath != null, "flutter.sdk not set in local.properties"[m
+[32m+[m[32m        return flutterSdkPath[m
+[32m+[m[32m    }()[m
+[32m+[m
+[32m+[m[32m    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")[m
+[32m+[m
+[32m+[m[32m    repositories {[m
+[32m+[m[32m        google()[m
+[32m+[m[32m        mavenCentral()[m
+[32m+[m[32m        gradlePluginPortal()[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mplugins {[m
+[32m+[m[32m    id "dev.flutter.flutter-plugin-loader" version "1.0.0"[m
+[32m+[m[32m    id "com.android.application" version "8.1.0" apply false[m
+[32m+[m[32m    id "org.jetbrains.kotlin.android" version "1.8.22" apply false[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32minclude ":app"[m
+[1mdiff --git a/assets/fonts/Lato-Bold.ttf b/assets/fonts/Lato-Bold.ttf[m
+[1mnew file mode 100644[m
+[1mindex 0000000..016068b[m
+Binary files /dev/null and b/assets/fonts/Lato-Bold.ttf differ
+[1mdiff --git a/assets/fonts/Lato-Light.ttf b/assets/fonts/Lato-Light.ttf[m
+[1mnew file mode 100644[m
+[1mindex 0000000..dfa72ce[m
+Binary files /dev/null and b/assets/fonts/Lato-Light.ttf differ
+[1mdiff --git a/assets/images/shoes_1.png b/assets/images/shoes_1.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9374f2b[m
+Binary files /dev/null and b/assets/images/shoes_1.png differ
+[1mdiff --git a/assets/images/shoes_2.png b/assets/images/shoes_2.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..94eae50[m
+Binary files /dev/null and b/assets/images/shoes_2.png differ
+[1mdiff --git a/assets/images/shoes_3.png b/assets/images/shoes_3.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..95dfacb[m
+Binary files /dev/null and b/assets/images/shoes_3.png differ
+[1mdiff --git a/assets/images/shoes_4.png b/assets/images/shoes_4.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f10e28d[m
+Binary files /dev/null and b/assets/images/shoes_4.png differ
+[1mdiff --git a/ios/.gitignore b/ios/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7a7f987[m
+[1m--- /dev/null[m
+[1m+++ b/ios/.gitignore[m
+[36m@@ -0,0 +1,34 @@[m
+[32m+[m[32m**/dgph[m
+[32m+[m[32m*.mode1v3[m
+[32m+[m[32m*.mode2v3[m
+[32m+[m[32m*.moved-aside[m
+[32m+[m[32m*.pbxuser[m
+[32m+[m[32m*.perspectivev3[m
+[32m+[m[32m**/*sync/[m
+[32m+[m[32m.sconsign.dblite[m
+[32m+[m[32m.tags*[m
+[32m+[m[32m**/.vagrant/[m
+[32m+[m[32m**/DerivedData/[m
+[32m+[m[32mIcon?[m
+[32m+[m[32m**/Pods/[m
+[32m+[m[32m**/.symlinks/[m
+[32m+[m[32mprofile[m
+[32m+[m[32mxcuserdata[m
+[32m+[m[32m**/.generated/[m
+[32m+[m[32mFlutter/App.framework[m
+[32m+[m[32mFlutter/Flutter.framework[m
+[32m+[m[32mFlutter/Flutter.podspec[m
+[32m+[m[32mFlutter/Generated.xcconfig[m
+[32m+[m[32mFlutter/ephemeral/[m
+[32m+[m[32mFlutter/app.flx[m
+[32m+[m[32mFlutter/app.zip[m
+[32m+[m[32mFlutter/flutter_assets/[m
+[32m+[m[32mFlutter/flutter_export_environment.sh[m
+[32m+[m[32mServiceDefinitions.json[m
+[32m+[m[32mRunner/GeneratedPluginRegistrant.*[m
+[32m+[m
+[32m+[m[32m# Exceptions to above rules.[m
+[32m+[m[32m!default.mode1v3[m
+[32m+[m[32m!default.mode2v3[m
+[32m+[m[32m!default.pbxuser[m
+[32m+[m[32m!default.perspectivev3[m
+[1mdiff --git a/ios/Flutter/AppFrameworkInfo.plist b/ios/Flutter/AppFrameworkInfo.plist[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7c56964[m
+[1m--- /dev/null[m
+[1m+++ b/ios/Flutter/AppFrameworkInfo.plist[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="UTF-8"?>[m
+[32m+[m[32m<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">[m
+[32m+[m[32m<plist version="1.0">[m
+[32m+[m[32m<dict>[m
+[32m+[m[32m  <key>CFBundleDevelopmentRegion</key>[m
+[32m+[m[32m  <string>en</string>[m
+[32m+[m[32m  <key>CFBundleExecutable</key>[m
+[32m+[m[32m  <string>App</string>[m
+[32m+[m[32m  <key>CFBundleIdentifier</key>[m
+[32m+[m[32m  <string>io.flutter.flutter.app</string>[m
+[32m+[m[32m  <key>CFBundleInfoDictionaryVersion</key>[m
+[32m+[m[32m  <string>6.0</string>[m
+[32m+[m[32m  <key>CFBundleName</key>[m
+[32m+[m[32m  <string>App</string>[m
+[32m+[m[32m  <key>CFBundlePackageType</key>[m
+[32m+[m[32m  <string>FMWK</string>[m
+[32m+[m[32m  <key>CFBundleShortVersionString</key>[m
+[32m+[m[32m  <string>1.0</string>[m
+[32m+[m[32m  <key>CFBundleSignature</key>[m
+[32m+[m[32m  <string>????</string>[m
+[32m+[m[32m  <key>CFBundleVersion</key>[m
+[32m+[m[32m  <string>1.0</string>[m
+[32m+[m[32m  <key>MinimumOSVersion</key>[m
+[32m+[m[32m  <string>12.0</string>[m
+[32m+[m[32m</dict>[m
+[32m+[m[32m</plist>[m
+[1mdiff --git a/ios/Flutter/Debug.xcconfig b/ios/Flutter/Debug.xcconfig[m
+[1mnew file mode 100644[m
+[1mindex 0000000..592ceee[m
+[1m--- /dev/null[m
+[1m+++ b/ios/Flutter/Debug.xcconfig[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m#include "Generated.xcconfig"[m
+[1mdiff --git a/ios/Flutter/Release.xcconfig b/ios/Flutter/Release.xcconfig[m
+[1mnew file mode 100644[m
+[1mindex 0000000..592ceee[m
+[1m--- /dev/null[m
+[1m+++ b/ios/Flutter/Release.xcconfig[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m#include "Generated.xcconfig"[m
+[1mdiff --git a/ios/Runner.xcodeproj/project.pbxproj b/ios/Runner.xcodeproj/project.pbxproj[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4b924a8[m
+[1m--- /dev/null[m
+[1m+++ b/ios/Runner.xcodeproj/project.pbxproj[m
+[36m@@ -0,0 +1,616 @@[m
+[32m+[m[32m// !$*UTF8*$![m
+[32m+[m[32m{[m
+[32m+[m	[32marchiveVersion = 1;[m
+[32m+[m	[32mclasses = {[m
+[32m+[m	[32m};[m
+[32m+[m	[32mobjectVersion = 54;[m
+[32m+[m	[32mobjects = {[m
+[32m+[m
+[32m+[m[32m/* Begin PBXBuildFile section */[m
+[32m+[m		[32m1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };[m
+[32m+[m		[32m331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };[m
+[32m+[m		[32m3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };[m
+[32m+[m		[32m74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };[m
+[32m+[m		[32m97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };[m
+[32m+[m		[32m97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };[m
+[32m+[m		[32m97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };[m
+[32m+[m[32m/* End PBXBuildFile section */[m
+[32m+[m
+[32m+[m[32m/* Begin PBXContainerItemProxy section */[m
+[32m+[m		[32m331C8085294A63A400263BE5 /* PBXContainerItemProxy */ = {[m
+[32m+[m			[32misa = PBXContainerItemProxy;[m
+[32m+[m			[32mcontainerPortal = 97C146E61CF9000F007C117D /* Project object */;[m
+[32m+[m			[32mproxyType = 1;[m
+[32m+[m			[32mremoteGlobalIDString = 97C146ED1CF9000F007C117D;[m
+[32m+[m			[32mremoteInfo = Runner;[m
+[32m+[m		[32m};[m
+[32m+[m[32m/* End PBXContainerItemProxy section */[m
+[32m+[m
+[32m+[m[32m/* Begin PBXCopyFilesBuildPhase section */[m
+[32m+[m		[32m9705A1C41CF9048500538489 /* Embed Frameworks */ = {[m
+[32m+[m			[32misa = PBXCopyFilesBuildPhase;[m
+[32m+[m			[32mbuildActionMask = 2147483647;[m
+[32m+[m			[32mdstPath = "";[m
+[32m+[m			[32mdstSubfolderSpec = 10;[m
+[32m+[m			[32mfiles = ([m
+[32m+[m			[32m);[m
+[32m+[m			[32mname = "Embed Frameworks";[m
+[32m+[m			[32mrunOnlyForDeploymentPostprocessing = 0;[m
+[32m+[m		[32m};[m
+[32m+[m[32m/* End PBXCopyFilesBuildPhase section */[m
+[32m+[m
+[32m+[m[32m/* Begin PBXFileReference section */[m
+[32m+[m		[32m1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };[m
+[32m+[m		[32m1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };[m
+[32m+[m		[32m331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };[m
+[32m+[m		[32m331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType =
