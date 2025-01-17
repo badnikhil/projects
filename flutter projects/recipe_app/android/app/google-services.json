@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "88763634254",
+    "project_id": "hogo-b849a",
+    "storage_bucket": "hogo-b849a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88763634254:android:6faa742873966ab12ea91f",
+        "android_client_info": {
+          "package_name": "com.example.recipe_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALpMfbRW3esq169_LG0jnLkOBk-D9mKGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

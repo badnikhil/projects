@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/category.dart';
 import 'package:http/http.dart' as http;
+import 'package:recipe_app/global.dart';
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -113,18 +114,21 @@ Future<void> fetch() async {
                         padding: const EdgeInsets.all(14.0),
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                        ElevatedButton(onPressed: () {
-                          
-                        },style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
-                          child: Text( 
-                                data[0]['strMeal'].toString().toUpperCase(),
-                                style:  const TextStyle(backgroundColor: Colors.transparent,textBaseline: TextBaseline.alphabetic,
-                                  color: Colors.lightBlueAccent,
-                                  fontSize: 18,
-                                  fontFamily: 'font1',
-                                  fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 50),
+                          child: ElevatedButton(onPressed: () {
+                            
+                          },style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
+                            child: Text( 
+                                  data[0]['strMeal'].toString().toUpperCase(),
+                                  style:  const TextStyle(backgroundColor: Colors.transparent,textBaseline: TextBaseline.alphabetic,
+                                    color: Colors.lightBlueAccent,
+                                    fontSize: 18,
+                                    fontFamily: 'font1',
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                          ),
                         ),
                             const SizedBox(height: 130),
                             Row(
@@ -135,7 +139,15 @@ Future<void> fetch() async {
                                   backgroundColor: Colors.transparent,
                                 ), child: const Text('CHECK RECIPE >>',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 18,fontFamily: 'font1',fontWeight: FontWeight.bold),)),
                                  const Spacer(),
-                                 IconButton(onPressed: (){}, icon: const Icon(Icons.favorite_border_rounded),style: IconButton.styleFrom(backgroundColor: Colors.transparent),)
+                                 IconButton(onPressed: (){
+                                  setState(() {
+                                    if(liked[0]==true) {
+                                      liked[0]=false;
+                                    } else {
+                                      liked[0]=true;
+                                    }
+                                  });
+                                 }, icon: (liked[0]==true)?const Icon(Icons.favorite,color: Colors.red,):const Icon(Icons.favorite_border_rounded),style: IconButton.styleFrom(backgroundColor: Colors.transparent),)
                               ],
                             ),
                            
