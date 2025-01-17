@@ -15,7 +15,7 @@ class _HomepageState extends State<Homepage> {
 List<dynamic> data=[];
 Future<void> fetch() async {
     final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.php'));
-    
+
     if (response.statusCode == 200) {
       setState(() {
         data = jsonDecode(response.body)['meals'];
@@ -87,7 +87,7 @@ Future<void> fetch() async {
                        else
             Container(
               width: double.infinity,
-              height: 280,
+              height: 300,
               padding: const EdgeInsets.all(20),
               
               child: Stack(
@@ -110,26 +110,30 @@ Future<void> fetch() async {
                       
                 
                      Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(14.0),
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                        Text( 
-                              data[0]['strMeal'].toString(),
-                              style:  const TextStyle(backgroundColor: Colors.transparent,textBaseline: TextBaseline.alphabetic,
-                                color: Colors.white70,
-                                fontSize: 25,
-                                fontFamily: 'icon1',
-                                fontWeight: FontWeight.bold,
+                        ElevatedButton(onPressed: () {
+                          
+                        },style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
+                          child: Text( 
+                                data[0]['strMeal'].toString().toUpperCase(),
+                                style:  const TextStyle(backgroundColor: Colors.transparent,textBaseline: TextBaseline.alphabetic,
+                                  color: Colors.lightBlueAccent,
+                                  fontSize: 18,
+                                  fontFamily: 'font1',
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 110),
+                        ),
+                            const SizedBox(height: 130),
                             Row(
                               children: [
                                 ElevatedButton(onPressed: () {
                                   
                                 },style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
-                                ), child: const Text('CHECK RECIPE >>',style: TextStyle(fontFamily: 'font1',fontWeight: FontWeight.bold),)),
+                                ), child: const Text('CHECK RECIPE >>',style: TextStyle(color: Colors.lightBlueAccent,fontSize: 18,fontFamily: 'font1',fontWeight: FontWeight.bold),)),
                                  const Spacer(),
                                  IconButton(onPressed: (){}, icon: const Icon(Icons.favorite_border_rounded),style: IconButton.styleFrom(backgroundColor: Colors.transparent),)
                               ],
