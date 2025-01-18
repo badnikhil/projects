@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        google()  // Ensure this is listed
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.0'  // Adjust version if necessary
+        classpath 'com.google.gms:google-services:4.3.15'  // Add Google Services classpath
+    }
+}
+
 allprojects {
     repositories {
-        google()
+        google()  // Ensure this is listed
         mavenCentral()
     }
 }
