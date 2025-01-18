@@ -13,14 +13,16 @@ class CategoryChips extends StatefulWidget {
 class _CategoryChipsState extends State<CategoryChips> {
   List<dynamic> data = [];
 
-  // Fetch category data from API
+  
   Future<void> fetch() async {
     final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/categories.php'));
     
     if (response.statusCode == 200) {
-      setState(() {
+      if(mounted) {
+        setState(() {
         data = jsonDecode(response.body)['categories'];
       });
+      }
     } else {
       throw Exception('Failed to load categories');
     }

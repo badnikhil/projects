@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/category.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipe_app/global.dart';
+import 'package:shimmer/shimmer.dart';
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -13,17 +15,18 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
 
-List<dynamic> data=[];
-Future<void> fetch() async {
-    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.php'));
 
-    if (response.statusCode == 200) {
+Future<void> fetch() async {
+    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.ph'));
+
+    if (response.statusCode == 200) {if(mounted) {
       setState(() {
         data = jsonDecode(response.body)['meals'];
        
       });
+    }
     } else {
-      throw Exception('Failed to load categories');
+      
     }
   }
 @override
@@ -84,8 +87,19 @@ Future<void> fetch() async {
                 textAlign: TextAlign.left,
               ),
             ),
-            if(data.isEmpty)const CircularProgressIndicator()
-                       else
+            if(data.isEmpty)SizedBox(height: 250,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context,index){
+                  return Padding(
+                   padding: const EdgeInsets.only(left: 20,right: 20),
+                    child: Shimmer.fromColors(baseColor: Colors.grey[300]!, highlightColor: Colors.grey[100]!, child: Container(
+                      height: 20,margin: const EdgeInsets.only(top: 10),decoration: const BoxDecoration(color: Colors.amber),
+                    )),
+                  );
+                }),
+            )
+            else
             Container(
               width: double.infinity,
               height: 300,
@@ -163,8 +177,19 @@ Future<void> fetch() async {
               padding: EdgeInsets.only(left: 20),
               child: Text('CATEGORIES',style: TextStyle(fontFamily: 'font',fontWeight: FontWeight.bold,fontSize: 25),),
             )
-            ,const CategoryChips()
-
+            ,(data.isEmpty)?SizedBox(height: 150,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context,index){
+                  return Padding(
+                    padding: const EdgeInsets.only(left:20.0,right: 20),
+                    child: Shimmer.fromColors(baseColor: Colors.grey[300]!, highlightColor: Colors.grey[100]!, child: Container(
+                      height: 10,margin: const EdgeInsets.only(top: 10),decoration: const BoxDecoration(color: Colors.white),
+                    )),
+                  );
+                }),
+            ):const CategoryChips()
+  
           ],
         ),
       );

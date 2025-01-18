@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
+
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +29,13 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          // If user is logged in, navigate to the HomePage.
+          
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
-            return const Homepage(); // Your custom HomePage
+            return const Homepage(); 
           } else {
-            return const SignInPage(); // Sign-in page for new users or logged-out users
+            return const SignInPage(); 
           }
         },
       ),
@@ -43,6 +43,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 
