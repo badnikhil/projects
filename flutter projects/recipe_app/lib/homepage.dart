@@ -14,15 +14,15 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-
+bool loading=true;
 
 Future<void> fetch() async {
-    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.ph'));
+    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.php'));
 
     if (response.statusCode == 200) {if(mounted) {
       setState(() {
         data = jsonDecode(response.body)['meals'];
-       
+       loading=false;
       });
     }
     } else {
@@ -177,18 +177,7 @@ Future<void> fetch() async {
               padding: EdgeInsets.only(left: 20),
               child: Text('CATEGORIES',style: TextStyle(fontFamily: 'font',fontWeight: FontWeight.bold,fontSize: 25),),
             )
-            ,(data.isEmpty)?SizedBox(height: 150,
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context,index){
-                  return Padding(
-                    padding: const EdgeInsets.only(left:20.0,right: 20),
-                    child: Shimmer.fromColors(baseColor: Colors.grey[300]!, highlightColor: Colors.grey[100]!, child: Container(
-                      height: 10,margin: const EdgeInsets.only(top: 10),decoration: const BoxDecoration(color: Colors.white),
-                    )),
-                  );
-                }),
-            ):const CategoryChips()
+            ,const CategoryChips()
   
           ],
         ),

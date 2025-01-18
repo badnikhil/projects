@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shimmer/shimmer.dart';
 
 class CategoryChips extends StatefulWidget {
   const CategoryChips({super.key});
@@ -36,10 +37,18 @@ class _CategoryChipsState extends State<CategoryChips> {
 
   @override
   Widget build(BuildContext context) {
-    if (data.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
-    } else {
-      return Container( height: 150, padding: const EdgeInsets.only(left: 10),
+    return data.isEmpty ? SizedBox(height: 150,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context,index){
+                  return Padding(
+                    padding: const EdgeInsets.only(left:20.0,right: 20),
+                    child: Shimmer.fromColors(baseColor: Colors.grey[300]!, highlightColor: Colors.grey[100]!, child: Container(
+                      height: 10,margin: const EdgeInsets.only(top: 10),decoration: const BoxDecoration(color: Colors.white),
+                    )),
+                  );
+                }),
+            ): Container( height: 150, padding: const EdgeInsets.only(left: 10),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: data.length,
@@ -72,6 +81,5 @@ class _CategoryChipsState extends State<CategoryChips> {
           },
         ),
       );
-    }
   }
 }
