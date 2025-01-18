@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/homepage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -115,84 +116,80 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign In'),
-      ),
-      body: Center(
-        child: _isLoading
-            ? const CircularProgressIndicator()
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      resizeToAvoidBottomInset: true, // Adjust content when keyboard appears
+      body: Stack(
+        children: [
+          // Background Image
+          SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Image.asset(
+              'assets/images/categorybg.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Main Content
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 100), // Space from top
+                  // App Title and Logo
+                  Column(
                     children: [
-                      TextField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
+                      const Text(
+                        'RECIPE APP',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        child: Image.asset(
+                          'assets/images/signinpage_logo.jpg',
+                          width: MediaQuery.of(context).size.width * 0.6,
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Row(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () async {
-                              User? user = await _signInWithEmailPassword(
-                                _emailController.text.trim(),
-                                _passwordController.text.trim(),
-                              );
-                          
-                              if (user != null) {
-                                print('Signed in as ${user.email}');
-                                if (mounted) {
-                                  Navigator.pushReplacement(
-                                    
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Homepage(),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            child: const Text('Sign In'),
-                          ),
-                          const SizedBox(width: 20,),
-                          ElevatedButton(
+                    ],
+                  ),
+                  const SizedBox(height: 50), // Space before form
+                  // Email and Password TextFields
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Sign In & Register Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
                         onPressed: () async {
-                          await _registerWithEmailPassword(
+                          User? user = await _signInWithEmailPassword(
                             _emailController.text.trim(),
                             _passwordController.text.trim(),
                           );
-                        },
-                        child: const Text('Register '),
-                      ),
-                        ],
-                      ),
-                      
-                      const SizedBox(height: 20),
-                      const Divider(),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () async {
-                          User? user = await _signInWithGoogle();
+
                           if (user != null) {
-                            print('Signed in as ${user.displayName}');
+                            print('Signed in as ${user.email}');
                             if (mounted) {
                               Navigator.pushReplacement(
                                 context,
@@ -203,14 +200,56 @@ class _SignInPageState extends State<SignInPage> {
                             }
                           }
                         },
-                        child: const Text('Sign In with Google'),
+                        child: const Text('Sign In'),
+                      ),
+                      const SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await _registerWithEmailPassword(
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
+                          );
+                        },
+                        child: const Text('Register'),
                       ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 20),
+                  const Divider(),
+                  const SizedBox(height: 20),
+                  // Google Sign-In Button
+                  ElevatedButton(
+                    onPressed: () async {
+                      User? user = await _signInWithGoogle();
+                      if (user != null) {
+                        print('Signed in as ${user.displayName}');
+                        if (mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Homepage(),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child: const Text('Sign In with Google'),
+                  ),
+                  const SizedBox(height: 50),
+                ],
               ),
+            ),
+          ),
+          // Loader
+          if (_isLoading)
+            Container(
+              color: Colors.black54,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+        ],
       ),
     );
   }
 }
-
