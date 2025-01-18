@@ -119,31 +119,31 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Adjust content when keyboard appears
+      resizeToAvoidBottomInset: false, 
       body: Stack(
         children: [
-          // Background Image
+          
           SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Image.asset(
-              'assets/images/categorybg.jpg',
-              fit: BoxFit.cover,
+              'assets/images/signin_bg.jpg',
+              fit: BoxFit.fill,
             ),
           ),
-          // Main Content
+          
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
                 children: [
-                  const SizedBox(height: 100), // Space from top
-                  // App Title and Logo
+                  const SizedBox(height: 100),
+                  
                   Column(
                     children: [
                       const Text(
                         'RECIPE APP',
-                        style: TextStyle(
+                        style: TextStyle(color: Color.fromARGB(203, 205, 218, 255),
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
                         ),
@@ -158,13 +158,13 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50), // Space before form
-                  // Email and Password TextFields
+                  const SizedBox(height: 50), 
+
                   TextField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(),
+                    decoration: const InputDecoration(fillColor: Colors.white,filled: true,
+                      labelText: '  Email',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35))),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -172,16 +172,16 @@ class _SignInPageState extends State<SignInPage> {
                     controller: _passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
+                      labelText: '  Password',fillColor: Colors.white,filled: true,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35))),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  // Sign In & Register Buttons
+                
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
+                      ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
                         onPressed: () async {
                           User? user = await _signInWithEmailPassword(
                             _emailController.text.trim(),
@@ -200,25 +200,25 @@ class _SignInPageState extends State<SignInPage> {
                             }
                           }
                         },
-                        child: const Text('Sign In'),
+                        child: const Text('Sign In',style: TextStyle(color: Colors.white),),
                       ),
                       const SizedBox(width: 20),
-                      ElevatedButton(
+                      ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
                         onPressed: () async {
                           await _registerWithEmailPassword(
                             _emailController.text.trim(),
                             _passwordController.text.trim(),
                           );
                         },
-                        child: const Text('Register'),
+                        child: const Text('Register',style: TextStyle(color: Colors.white),),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const Divider(),
+                  const Row(children: [Expanded(child: Divider(indent: 0,)),Padding(padding: EdgeInsets.all(5),child: Text('OR',style: TextStyle(fontSize: 20,color: Colors.white),),),Expanded(child: Divider())]),
                   const SizedBox(height: 20),
-                  // Google Sign-In Button
-                  ElevatedButton(
+     
+                  ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
                     onPressed: () async {
                       User? user = await _signInWithGoogle();
                       if (user != null) {
@@ -233,14 +233,14 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       }
                     },
-                    child: const Text('Sign In with Google'),
+                    child: const Text('Sign In with Google',style: TextStyle(color: Colors.white),),
                   ),
                   const SizedBox(height: 50),
                 ],
               ),
             ),
           ),
-          // Loader
+      
           if (_isLoading)
             Container(
               color: Colors.black54,
