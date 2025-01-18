@@ -141,11 +141,11 @@ class _SignInPageState extends State<SignInPage> {
                   
                   Column(
                     children: [
-                      const Text(
+                       Text(
                         'RECIPE APP',
-                        style: TextStyle(color: Color.fromARGB(203, 205, 218, 255),
+                        style: TextStyle(color: Colors.grey[50],
                           fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                          fontSize: 35,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -160,20 +160,34 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   const SizedBox(height: 50), 
 
-                  TextField(
+                  TextField(cursorColor: Colors.black26,
                     controller: _emailController,
-                    decoration: const InputDecoration(fillColor: Colors.white,filled: true,
-                      labelText: '  Email',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35))),
+                    decoration: const InputDecoration(fillColor: Color.fromARGB(224,239,245,255),filled: true,
+                      hintText: 'Email',contentPadding: EdgeInsets.only(left: 25,right: 10),suffixIcon: Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Icon(Icons.email_outlined,),
+                      ),
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(color: Colors.transparent)),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(
+                        color: Colors.transparent
+                      ))
                     ),
                   ),
                   const SizedBox(height: 10),
-                  TextField(
+                  TextField(cursorColor: Colors.black26,
                     controller: _passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: '  Password',fillColor: Colors.white,filled: true,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35))),
+                    decoration: const InputDecoration(suffixIcon: Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: Icon(Icons.lock_outline),
+                    ),contentPadding: EdgeInsets.only(left: 25),
+                      hintText: 'Password',fillColor:Color.fromARGB(224,239,245,255),filled: true,
+                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(color: Colors.transparent)),
+                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(
+                        color: Colors.transparent
+                      )),
+                      
+
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -200,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
                             }
                           }
                         },
-                        child: const Text('Sign In',style: TextStyle(color: Colors.white),),
+                        child: Text('Sign In',style: TextStyle(color: Colors.grey[100]),),
                       ),
                       const SizedBox(width: 20),
                       ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
@@ -210,7 +224,7 @@ class _SignInPageState extends State<SignInPage> {
                             _passwordController.text.trim(),
                           );
                         },
-                        child: const Text('Register',style: TextStyle(color: Colors.white),),
+                        child:  Text('Register',style: TextStyle(color: Colors.grey[100]),),
                       ),
                     ],
                   ),
@@ -233,7 +247,7 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       }
                     },
-                    child: const Text('Sign In with Google',style: TextStyle(color: Colors.white),),
+                    child:  Text('Sign In with Google',style: TextStyle(color: Colors.grey[100]),),
                   ),
                   const SizedBox(height: 50),
                 ],

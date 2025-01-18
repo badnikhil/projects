@@ -20,12 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
      
     return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromARGB(246, 252, 255, 255),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(246, 252, 255, 255),
-        ),
-      ),
+     
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

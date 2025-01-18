@@ -177,7 +177,20 @@ Future<void> fetch() async {
               padding: EdgeInsets.only(left: 20),
               child: Text('CATEGORIES',style: TextStyle(fontFamily: 'font',fontWeight: FontWeight.bold,fontSize: 25),),
             )
-            ,const CategoryChips()
+            ,const CategoryChips(),
+            const Padding(
+              padding: EdgeInsets.only(left: 20,top: 10),
+              child: Text(
+                "EXPLORE",
+                style: TextStyle(
+                  color: Color.fromARGB(255, 24, 42, 72),
+                  fontFamily: 'font',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
   
           ],
         ),
