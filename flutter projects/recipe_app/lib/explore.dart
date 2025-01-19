@@ -3,22 +3,28 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:recipe_app/global.dart';
 import 'package:recipe_app/recipe.dart';
 import 'package:shimmer/shimmer.dart';
 
-List<dynamic> exploreData=[];
+
+
+int objects =20;
+
   class Explore extends StatefulWidget {
+
   const Explore({super.key});
+ 
 
   @override
   State<Explore> createState() => _ExploreState();
 }
 
 class _ExploreState extends State<Explore> {
-  List<bool> loading=List.generate(11, (index)=>true);
+  List<bool> exploreLoading=List.generate(objects, (index)=>true);
 
   Future<void> fetch() async {
-   for(int i=0;i<10;i++){
+   for(int i=0;i<objects;i++){
     final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.php'));
 
     if (response.statusCode == 200) {
@@ -27,7 +33,8 @@ class _ExploreState extends State<Explore> {
           
           
          exploreData.add(jsonDecode(response.body)['meals'][0]);
-          loading[i]=false;
+          exploreLoading[i]=false;
+          
           
         });
       }
@@ -40,7 +47,7 @@ class _ExploreState extends State<Explore> {
   @override
   void initState() {
     super.initState();
-    // TODO: implement initState
+  
     fetch();
 
   }
@@ -48,16 +55,14 @@ class _ExploreState extends State<Explore> {
   
   @override
   Widget build(BuildContext context) {
-    return Container(height: 1300,
-      child: ListView.separated(scrollDirection: Axis.vertical,physics: const NeverScrollableScrollPhysics(),
-        itemCount: 10,
-        separatorBuilder: (context, index) => const SizedBox(height: 20) ,
+    return SizedBox(height: 2620,
+      child: ListView.builder(scrollDirection: Axis.vertical,physics: const NeverScrollableScrollPhysics(),
+        itemCount:objects,
+        
         itemBuilder: (context,index,){
-              
-               
-          return  (loading[index])?SizedBox(height: 150,
+          return  (exploreLoading[index])?SizedBox(height: 150,
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 4,
                 itemBuilder: (context,index){
                   return Padding(
                     padding: const EdgeInsets.only(left:20.0,right: 20),
@@ -66,7 +71,10 @@ class _ExploreState extends State<Explore> {
                     )),
                   );
                 }),
-            ):RecipeCard(index: index);
+            ):Padding(
+              padding: const EdgeInsets.only(left: 5,top:  8.0,bottom: 8,right: 5),
+              child: RecipeCard(index: index),
+            );
       
           
         }),

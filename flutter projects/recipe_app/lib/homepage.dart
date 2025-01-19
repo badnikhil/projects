@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:recipe_app/category.dart';
+import 'package:recipe_app/category_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipe_app/explore.dart';
 import 'package:recipe_app/global.dart';
@@ -16,6 +16,12 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+ 
+
+ 
+  
+
+
   bool loading = true;
   var data = [];
 
@@ -30,7 +36,7 @@ class _HomepageState extends State<Homepage> {
         });
       }
     } else {
-      // Handle error if needed
+     throw Exception('CH');
     }
   }
 
@@ -170,7 +176,7 @@ class _HomepageState extends State<Homepage> {
                                           liked[0] = !liked[0]!;
                                         });
                                       },
-                                      icon: (liked[0]!)
+                                      icon: (liked[0]==true)
                                           ? const Icon(
                                               Icons.favorite,
                                               color: Colors.red,
@@ -218,7 +224,7 @@ class _HomepageState extends State<Homepage> {
                 textAlign: TextAlign.left,
               ),
             ),
-            const Explore()
+            const Explore(),
           ],
         ),
       ),
