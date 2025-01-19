@@ -67,7 +67,7 @@ class _CategoryChipsState extends State<CategoryChips> {
                     child: Text(data[index]['strCategory'],style: const TextStyle(fontFamily: 'font1',fontSize: 20,color: Colors.white),),
                   ),
                 ),
-                ElevatedButton(onPressed: (){print('tapped');},child: SizedBox(height: 190,width: 190),style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,shadowColor: Colors.transparent),),          
+                ElevatedButton(onPressed: (){},style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,shadowColor: Colors.transparent),child: const SizedBox(height: 190,width: 190),),          
               ],),
             );
           },

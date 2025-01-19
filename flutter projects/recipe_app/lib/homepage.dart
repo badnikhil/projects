@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app/category.dart';
 import 'package:http/http.dart' as http;
@@ -6,6 +7,7 @@ import 'package:recipe_app/explore.dart';
 import 'package:recipe_app/global.dart';
 import 'package:shimmer/shimmer.dart';
 
+ 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -143,29 +145,7 @@ class _HomepageState extends State<Homepage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 50),
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.transparent,
-                                    ),
-                                    child: Text(
-                                      data[0]['strMeal']
-                                          .toString()
-                                          .toUpperCase(),
-                                      style: const TextStyle(
-                                        backgroundColor: Colors.transparent,
-                                        textBaseline: TextBaseline.alphabetic,
-                                        color: Colors.lightBlueAccent,
-                                        fontSize: 18,
-                                        fontFamily: 'font1',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 130),
+                                const SizedBox(height: 180),
                                 Row(
                                   children: [
                                     ElevatedButton(
@@ -176,7 +156,7 @@ class _HomepageState extends State<Homepage> {
                                       child: const Text(
                                         'CHECK RECIPE >>',
                                         style: TextStyle(
-                                          color: Colors.lightBlueAccent,
+                                          color: Colors.white,
                                           fontSize: 18,
                                           fontFamily: 'font1',
                                           fontWeight: FontWeight.bold,
@@ -238,7 +218,7 @@ class _HomepageState extends State<Homepage> {
                 textAlign: TextAlign.left,
               ),
             ),
-            Explore()
+            const Explore()
           ],
         ),
       ),
