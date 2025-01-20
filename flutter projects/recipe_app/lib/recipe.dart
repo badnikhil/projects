@@ -1,17 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recipe_app/firebase_services.dart';
 
 import 'package:recipe_app/global.dart';
 
 class RecipeCard extends StatefulWidget {
  final int index;
-  const RecipeCard({super.key,required this.index});
-
+   const RecipeCard({super.key,required this.index});
+   
   @override
   State<RecipeCard> createState() => _RecipeCardState();
 }
 
 class _RecipeCardState extends State<RecipeCard> {
+  bool isLiked=false;
+  Future<void> saveme()async{ isLiked= await FirebaseServices().isRecipeLiked(int.parse(exploreData[widget.index]['idMeal']));
+  }
+@override
+  void initState(){
+    
+    super.initState();
+      saveme();   
+
+  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -90,10 +101,11 @@ class _RecipeCardState extends State<RecipeCard> {
                 child: IconButton(
                   onPressed: () {
                     setState(() {
-                      liked[int.parse( exploreData[widget.index]['idMeal'].toString())] = !(liked[int.parse( exploreData[widget.index]['idMeal'].toString())] ?? false);
+                      FirebaseServices().toggleLike(exploreData[widget.index]['idMeal'].toString());
+                      isLiked=!isLiked;
                     });
                   },
-                  icon: ((liked[int.parse( exploreData[widget.index]['idMeal'].toString())] ?? false))
+                  icon: (isLiked)
                       ? const Icon(
                           Icons.favorite,
                           color: Colors.red,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/category_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipe_app/explore.dart';
-import 'package:recipe_app/global.dart';
+import 'package:recipe_app/firebase_services.dart';
 import 'package:shimmer/shimmer.dart';
 
  
@@ -16,12 +16,7 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
- 
-
- 
-  
-
-
+  bool isLiked=false;
   bool loading = true;
   var data = [];
 
@@ -33,17 +28,21 @@ class _HomepageState extends State<Homepage> {
         setState(() {
           data = jsonDecode(response.body)['meals'];
           loading = false;
+         saveme();
         });
       }
     } else {
      throw Exception('CH');
     }
   }
+    Future<void> saveme() async {
+       isLiked= await FirebaseServices().isRecipeLiked(int.parse(data[0]['idMeal']));
 
+    }
   @override
   void initState() {
     super.initState();
-    fetch();
+    fetch();  
   }
 
   @override
@@ -78,7 +77,10 @@ class _HomepageState extends State<Homepage> {
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+
+                    },
                     icon: const Icon(
                       Icons.search_sharp,
                       color: Color.fromARGB(203, 205, 218, 255),
@@ -173,10 +175,12 @@ class _HomepageState extends State<Homepage> {
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          liked[0] = !liked[0]!;
+                                            FirebaseServices().toggleLike(data[0]['idMeal']);
+
+                                          isLiked = !isLiked;
                                         });
                                       },
-                                      icon: (liked[0]==true)
+                                      icon: (isLiked)
                                           ? const Icon(
                                               Icons.favorite,
                                               color: Colors.red,
@@ -224,7 +228,7 @@ class _HomepageState extends State<Homepage> {
                 textAlign: TextAlign.left,
               ),
             ),
-            const Explore(),
+            const Explore()
           ],
         ),
       ),

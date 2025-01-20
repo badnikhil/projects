@@ -25,7 +25,7 @@ class _ExploreState extends State<Explore> {
 
   Future<void> fetch() async {
    for(int i=0;i<objects;i++){
-    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.php'));
+    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/search.php?s=flamiche'));
 
     if (response.statusCode == 200) {
       if (mounted) {

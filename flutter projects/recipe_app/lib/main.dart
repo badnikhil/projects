@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/homepage.dart';
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasData) {
             return const Homepage(); 
           } else {
-            return const SignInPage(); 
+            return const SignInPage();
           }
         },
       ),
@@ -38,5 +36,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

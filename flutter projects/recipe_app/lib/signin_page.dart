@@ -13,6 +13,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  bool showpass=false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -48,6 +49,7 @@ class _SignInPageState extends State<SignInPage> {
 
       setState(() {
         _isLoading = false;
+       
       });
 
       return userCredential.user;
@@ -74,9 +76,9 @@ class _SignInPageState extends State<SignInPage> {
           await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       setState(() {
+        
         _isLoading = false;
       });
-
       return userCredential.user;
     } catch (e) {
       setState(() {
@@ -97,9 +99,9 @@ class _SignInPageState extends State<SignInPage> {
     });
 
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      setState(() {
+      setState(() async {
         _isLoading = false;
+         
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -176,14 +178,18 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(height: 10),
                   TextField(cursorColor: Colors.black26,
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(suffixIcon: Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Icon(Icons.lock_outline),
-                    ),contentPadding: EdgeInsets.only(left: 25),
-                      hintText: 'Password',fillColor:Color.fromARGB(224,239,245,255),filled: true,
-                      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(color: Colors.transparent)),
-                      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(
+                    obscureText: showpass,
+                    decoration:  InputDecoration(suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: IconButton(icon:  const Icon(Icons.lock_outline),onPressed: (){
+                        setState(() {
+                          showpass=!showpass;
+                        });
+                      },),
+                    ),contentPadding: const EdgeInsets.only(left: 25),
+                      hintText: 'Password',fillColor:const Color.fromARGB(224,239,245,255),filled: true,
+                      enabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(color: Colors.transparent)),
+                      focusedBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(35)),borderSide: BorderSide(
                         color: Colors.transparent
                       )),
                       

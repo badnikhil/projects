@@ -1,4 +1,5 @@
-Map<int,bool> liked={0:true,1:false};
+
 List<dynamic> data=[];
 List<dynamic> exploreData=[];
+String userID='w7wdg9aOvYfc5nAOrJdaN1jzaVr2';
 
