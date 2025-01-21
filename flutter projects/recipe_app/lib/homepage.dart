@@ -1,13 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:recipe_app/category_list.dart';
+import 'package:recipe_app/category.dart';
 import 'package:http/http.dart' as http;
-import 'package:recipe_app/explore.dart';
+
 import 'package:recipe_app/firebase_services.dart';
+import 'package:recipe_app/global.dart';
+import 'package:recipe_app/liked_section.dart';
+
+import 'package:recipe_app/recipe.dart';
 import 'package:shimmer/shimmer.dart';
 
- 
+
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
@@ -18,27 +22,32 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   bool isLiked=false;
   bool loading = true;
-  var data = [];
+  List<dynamic> data=[];
 
   Future<void> fetch() async {
-    final response = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/random.php'));
+    final response = await http.get(Uri.parse(randomCardAPI));
 
     if (response.statusCode == 200) {
       if (mounted) {
         setState(() {
           data = jsonDecode(response.body)['meals'];
-          loading = false;
-         saveme();
+         
+        
         });
       }
     } else {
      throw Exception('CH');
     }
-  }
-    Future<void> saveme() async {
-       isLiked= await FirebaseServices().isRecipeLiked(int.parse(data[0]['idMeal']));
+isLiked=await FirebaseServices().isRecipeLiked(data[0]['idMeal']);
+setState(() {
+  
+  loading=false;
+});
 
-    }
+
+
+  }
+    
   @override
   void initState() {
     super.initState();
@@ -47,9 +56,30 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(drawer: Drawer(width: MediaQuery.of(context).size.width/2,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 4),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.end,
+          children: [const Divider(),
+           TextButton(
+            onPressed: (){
+           }, child: const Row(
+             children: [
+               Text('LOGOUT',style: TextStyle(fontSize: 20),),Spacer(),
+               Padding(
+                 padding: EdgeInsets.all(8.0),
+                 child: Icon(Icons.power_settings_new_outlined),
+               )
+             ],
+           )),
+           const Divider(),
+          
+          ],
+        ),
+      ),
+      
+    ),
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,28 +88,45 @@ class _HomepageState extends State<Homepage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.menu,
-                      color: Color.fromARGB(203, 205, 218, 255),
-                    ),
+                  child: Builder(
+                    builder: (context) {
+                      return IconButton(
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                      
+                        },
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Color.fromARGB(203, 205, 218, 255),
+                        ),
+                      );
+                    }
                   ),
                 ),
                 const Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite_border,
-                    color: Color.fromARGB(203, 205, 218, 255),
-                  ),
-                ),
+               
+                 
+                   IconButton(
+                      onPressed: () {
+                            Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LikedSection()),  // Open LikedSection as a new screen
+    );
+                         
+                      },
+                      icon: const Icon(
+                        Icons.favorite_border,
+                        color: Color.fromARGB(203, 205, 218, 255),
+                      ),
+                    ),
+                  
+                
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
                     onPressed: () {
-
-
+        
+        
                     },
                     icon: const Icon(
                       Icons.search_sharp,
@@ -145,7 +192,7 @@ class _HomepageState extends State<Homepage> {
                             borderRadius: BorderRadius.circular(15),
                             child: Image.network(
                               data[0]['strMealThumb'].toString(),
-                              fit: BoxFit.fitWidth,
+                              fit: BoxFit.fill
                             ),
                           ),
                           Padding(
@@ -176,7 +223,7 @@ class _HomepageState extends State<Homepage> {
                                       onPressed: () {
                                         setState(() {
                                             FirebaseServices().toggleLike(data[0]['idMeal']);
-
+        
                                           isLiked = !isLiked;
                                         });
                                       },
@@ -214,7 +261,7 @@ class _HomepageState extends State<Homepage> {
                 ),
               ),
             ),
-            const CategoryChips(),
+            const CategoryList(),
             const Padding(
               padding: EdgeInsets.only(left: 20, top: 10),
               child: Text(
@@ -228,7 +275,25 @@ class _HomepageState extends State<Homepage> {
                 textAlign: TextAlign.left,
               ),
             ),
-            const Explore()
+          SizedBox(height: 130*objects.toDouble(),
+            child: ListView.builder(scrollDirection: Axis.vertical,physics: const NeverScrollableScrollPhysics(),
+              itemCount:objects,cacheExtent: 100000,
+              
+              itemBuilder: (context,index,){
+                return  Padding(
+                    padding: const EdgeInsets.only(left: 5,top:  8.0,bottom: 8,right: 5),
+                    child: RecipeCard(api: randomCardAPI,),
+                  );
+            
+                
+              }),
+          ),
+            TextButton(onPressed: (){
+            setState(() {
+              objects=objects+5;
+            });
+          }, child: const Center(child: Text('Tap to Load More')))
+          
           ],
         ),
       ),

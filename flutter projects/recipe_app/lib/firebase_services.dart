@@ -33,27 +33,30 @@ void createUserDocument(String userID)async{
   }
 }
 
- Future<bool> isRecipeLiked(int recipeId) async {
-    try {
-      // Fetch the user's document from Firestore
-      DocumentSnapshot userSnapshot = await firestore.collection('userData').doc(userID.toString()).get();
+Future<bool> isRecipeLiked(String recipeId) async {
 
-      // If the user's document exists
-      if (userSnapshot.exists) {
-        // Get the liked recipes array
-        List<dynamic> likedRecipes = userSnapshot['liked'] ?? [];
+ 
+  try {
+    // Fetch the user's document from Firestore
+    DocumentSnapshot userSnapshot = await firestore.collection('userData').doc(userID.toString()).get();
 
-        // Check if the recipeId is in the liked recipes list
-        return likedRecipes.contains(recipeId);
-      }
+    // If the user's document exists
+    if (userSnapshot.exists) {
+      // Get the liked recipes array (assuming 'liked' field is a list of Strings)
+      List<dynamic> likedRecipes = userSnapshot['liked'] ?? [];
 
-      // If the user's document does not exist or no liked recipes field
-      return false;
-    } catch (e) {
-      print("Error checking like status: $e");
-      return false;
+      // Check if the recipeId is in the liked recipes list (ensure types match)
+      return likedRecipes.contains(recipeId);
     }
+
+    // If the user's document does not exist or no liked recipes field
+    return false;
+  } catch (e) {
+    print("Error checking like status for recipeId $recipeId: $e");
+    return false;
   }
+}
+
 
 
 void toggleLike( String mealID) async {
@@ -101,6 +104,39 @@ void toggleLike( String mealID) async {
     print("User not found");
   }
 }
+
+
+Future<List<int>> getLikedRecipeIds() async {
+   print('started');
+  try {
+    // Fetch the user's document from Firestore
+    DocumentSnapshot userDoc = await firestore
+        .collection('userData')
+        .doc(userID.toString())
+        .get();
+
+    // Check if the document exists
+    if (userDoc.exists) {
+      // Get the 'liked' array from the document
+      List<dynamic> likedArray = userDoc['liked'] ?? [];
+
+      // Convert the dynamic list into a list of integers
+      List<int> likedRecipeIds = likedArray.map((id) => int.tryParse(id.toString()) ?? 0).toList();
+
+      // Filter out invalid or zero IDs
+      likedRecipeIds.removeWhere((id) => id == 0);
+
+      return likedRecipeIds;
+    } else {
+      print("User document not found");
+      return [];
+    }
+  } catch (e) {
+    print("Error fetching liked recipe IDs: $e");
+    return [];
+  }
+}
+
 
 
 }
