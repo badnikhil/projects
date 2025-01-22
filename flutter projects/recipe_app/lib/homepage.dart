@@ -38,7 +38,7 @@ class _HomepageState extends State<Homepage> {
     } else {
      throw Exception('CH');
     }
-isLiked=await FirebaseServices().isRecipeLiked(data[0]['idMeal']);
+isLiked=await FirebaseServices().isRecipeLiked(data[0]['idMeal'].toString());
 setState(() {
   
   loading=false;
@@ -110,7 +110,7 @@ setState(() {
                       onPressed: () {
                             Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const LikedSection()),  // Open LikedSection as a new screen
+       MaterialPageRoute(builder: (context) => const LikedSection()), 
     );
                          
                       },
@@ -178,7 +178,9 @@ setState(() {
                 child: Stack(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                      
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -200,11 +202,15 @@ setState(() {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                               
                                 const SizedBox(height: 180),
                                 Row(
                                   children: [
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                          Navigator.push(context,MaterialPageRoute(builder: (context) =>  RecipeDetails(data:data)));
+         
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.transparent,
                                       ),

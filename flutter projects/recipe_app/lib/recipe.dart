@@ -6,6 +6,7 @@ import 'package:recipe_app/firebase_services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:shimmer/shimmer.dart';
+import 'package:video_player/video_player.dart';
 
 class RecipeCard extends StatefulWidget {
  final String api;
@@ -139,32 +140,47 @@ if(mounted) {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 8.0),
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      FirebaseServices().toggleLike(data[0]['idMeal'].toString());
-                      isLiked=!isLiked;
-                    });
-                  },
-                  icon: (isLiked)
-                      ? const Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        )
-                      : const Icon(
-                          Icons.favorite_border_rounded,
-                        ),
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
-              ),
+           
             ],
           ),
         ),
-      ],
+      
+      SizedBox(width: double.maxFinite-50,height: 120,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,shadowColor: Colors.transparent),
+          onPressed: (){
+        Navigator.push(context,MaterialPageRoute(builder: (context) =>  RecipeDetails(data:data)));
+         
+        }, child: null),
+      ),
+
+         Row(mainAxisAlignment: MainAxisAlignment.end,crossAxisAlignment: CrossAxisAlignment.end,
+           children: [
+             Container(
+                    margin: const EdgeInsets.only(right: 10.0),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          FirebaseServices().toggleLike(data[0]['idMeal'].toString());
+                          isLiked=!isLiked;
+                        });
+                      },
+                      icon: (isLiked)
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            )
+                          : const Icon(
+                              Icons.favorite_border_rounded,
+                            ),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                  ),
+           ],
+         ),],
+      
     );
   }
 }
@@ -173,108 +189,416 @@ if(mounted) {
 
 
 
-class TempRecipeCard extends StatefulWidget {
 
-   const TempRecipeCard({super.key});
-   
+
+
+
+
+class RecipeDetails extends StatefulWidget {
+  final List<dynamic> data;
+  const RecipeDetails({super.key,required this.data});
+
   @override
-  State<TempRecipeCard> createState() => _TempRecipeCardState();
+  State<RecipeDetails> createState() => _RecipeDetailsState();
 }
 
-class _TempRecipeCardState extends State<TempRecipeCard> {
-  bool isLiked=false;
- 
-@override
-  void initState(){
-    
-    super.initState();
-     
+class _RecipeDetailsState extends State<RecipeDetails> {
 
+
+
+  void fetch()async{
+     bool liked=await FirebaseServices().isRecipeLiked(mealID);
+    setState(() {
+      isliked=liked;
+    });
+  }
+late String mealID;
+
+
+  bool isliked=false;
+  String selSec="";
+
+
+  List<String> section=['Recipe','Ingredients','Video'];
+
+
+@override
+  void initState() {
+  
+    super.initState();
+    selSec=section[0];
+    mealID=widget.data[0]['idMeal'].toString();
+    fetch();
+  
+ 
+
+  }
+
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  height: 250,
+                  width: double.infinity,
+                  child: Image.network(
+                    widget.data[0]['strMealThumb'].toString(),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.black54, Colors.transparent],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 20,
+                  top: 200,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isliked = !isliked;
+                        FirebaseServices().toggleLike(mealID);
+                      });
+                    },
+                    icon: (isliked)
+                        ? const Icon(Icons.favorite, color: Color(0xFFFF6F61))
+                        : const Icon(Icons.favorite_border_outlined),
+                    iconSize: 35,
+                  ),
+                ),
+              IconButton(onPressed: (){
+                setState(() {
+                  Navigator.pop(context);
+                });
+              }
+           
+              , icon: const Icon(Icons.arrow_back_ios_rounded,color: Colors.black,),)
+              ],
+              
+            ),
+           
+             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(CupertinoIcons.tag, size: 30, color: Colors.grey),
+                  const SizedBox(width: 8),
+                  // Display tags from tempdata['strtags']
+                  Flexible(
+                    child: Wrap(
+                      spacing: 8.0,
+                      runSpacing: 4.0,
+                      children: widget.data[0]['strTags']?.split(',')?.map<Widget>((tag) {
+                        return Chip(shape:RoundedRectangleBorder(side: const BorderSide(color:Colors.transparent ),borderRadius: BorderRadius.circular(17)),
+                          label: Text(tag.trim()),
+                          backgroundColor: Colors.grey[200],
+                          
+                        );
+                      })?.toList() ??
+                          [],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+
+
+
+
+
+            Container(margin: const EdgeInsets.only(bottom: 15),
+              child: Center(
+                child: Text(
+                  widget.data[0]['strMeal'].toString(),
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'font1',
+                    color: Color(0xFF333333),
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: section.map((e) {
+                final isActive = e == selSec;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selSec = e;
+                    });
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 22),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: isActive
+                          ? const Color(0xFF9ACD32)
+                          : const Color(0xFFFDF5E6),
+                    ),
+                    child: Text(
+                      e,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 15),
+           if(selSec=='Recipe')RecipeSection(data: widget.data),
+           if(selSec=='Ingredients')
+              IngredientsSection(data: widget.data)  ,
+        if(selSec=='Video')VideoSection(data: widget.data),        
+    
+         
+
+          ],
+        ),
+      ),
+    );
+}
+
+}
+
+class VideoSection extends StatefulWidget {
+   final  List<dynamic> data;
+  const VideoSection({super.key,required this.data});
+
+  @override
+  State<VideoSection> createState() => _VideoSectionState();
+}
+
+class _VideoSectionState extends State<VideoSection> {
+  late VideoPlayerController _controller;
+  @override
+ void initState() {
+  super.initState();
+  _controller = VideoPlayerController.networkUrl(Uri.parse(widget.data[0]['strYoutube'].toString()))
+    ..initialize().then((_) {
+      setState(() {});
+      _controller.play();
+    });
+}
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(color: Colors.grey[100]),
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          padding: const EdgeInsets.all(5),
-          height: 110,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  'assets/images/bg.jpg',
-                  width: 110,
-                  fit: BoxFit.cover,
-                ),
+    return  Container(
+          height: 250.0,color: Colors.amber,
+          child: _controller.value.isInitialized
+              ? VideoPlayer(_controller)
+              : const Center(child: CircularProgressIndicator()),
+        );
+  }
+}
+
+
+class IngredientsSection extends StatefulWidget {
+  final  List<dynamic> data;
+  const IngredientsSection({super.key,required this.data});
+
+  @override
+  State<IngredientsSection> createState() => _IngredientsSectionState();
+}
+
+class _IngredientsSectionState extends State<IngredientsSection> {
+
+late List<Map<String, String>> ingredients;
+List<Map<String, String>> filterIngredients(Map<String, dynamic> recipeData) {
+  List<Map<String, String>> ingredients = [];
+
+  for (int i = 1; i <= 20; i++) {
+    // Extract ingredient and measure dynamically
+    String? ingredient = recipeData['strIngredient$i'];
+    String? measure = recipeData['strMeasure$i'];
+
+    // Check if ingredient exists and is not null or empty
+    if (ingredient != null && ingredient.isNotEmpty) {
+      ingredients.add({
+        "ingredient": ingredient,
+        "measure": measure ?? "",
+      });
+    }
+  } 
+  return ingredients;
+
+}
+String capitalize(String text) {
+  if (text.isEmpty) {
+    return text;
+  } else {
+    return text[0].toUpperCase() + text.substring(1);
+  }
+}
+
+@override
+  void initState() {
+
+    super.initState();
+     ingredients = filterIngredients(widget.data[0]);
+    
+  }
+
+   @override
+  Widget build(BuildContext context) {
+      return               Container(
+        decoration: BoxDecoration(color: const Color.fromARGB(255, 235 , 227, 224),borderRadius: BorderRadius.circular(15)),
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Ingredients:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8.0, right: 10),
+            ),
+           
+            ListView.builder(
+              itemCount: ingredients.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom:10.0),
+                  child: Container(decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15)),padding: const EdgeInsets.all(10),
+                            
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 1.3),
+                          child: Text(
+                            '${index + 1}. ',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,fontSize: 20
+                            ),
+                            
+                          ),
+                        ),
+                        Expanded(child: Text( '${capitalize(ingredients[index]["ingredient"].toString())} (${ingredients[index]["measure"]})',
+                        style: 
+                        const TextStyle(fontFamily: 'font1',fontSize: 20),))
+                       
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      );
+  }
+}
+
+
+class RecipeSection extends StatefulWidget {
+  final  List<dynamic> data;
+  const RecipeSection({super.key,required this.data});
+
+
+  @override
+  State<RecipeSection> createState() => _RecipeSectionState();
+}
+
+class _RecipeSectionState extends State<RecipeSection> {
+
+List<String> steps=[];
+List<String> parseSteps(String instructions) {
+  
+  List<String> steps = instructions.split('.').map((step) => step.trim()).toList();
+
+ 
+  steps.removeWhere((step) => step.isEmpty);
+ 
+  return steps;
+}
+
+@override
+  void initState() {
+    super.initState();
+    steps=parseSteps(widget.data[0]['strInstructions']);
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+      return  Container(decoration: BoxDecoration(color: const Color.fromARGB(255, 235 , 227, 224),borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+                  padding: const EdgeInsets.only(top: 10,left: 10,right: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Category',
+                      const Text(
+                        'Recipe Steps:',
                         style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: 'font1',
-                          color: Color.fromRGBO(9, 194, 241, 1),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                       'Name',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'font1',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
                       ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(CupertinoIcons.tag, size: 20),
-                          Text('data')
-                        ],
+                     
+                      ListView.builder(
+                        itemCount: steps.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Container(decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(15)),padding: const EdgeInsets.all(10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 01.6),
+                                    child: Text(
+                                      '${index + 1}.  ',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,fontFamily: 'font1'
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      steps[index],
+                                      style: const TextStyle(fontSize: 15,fontFamily: 'font1'),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 8.0),
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      
-                      isLiked=!isLiked;
-                    });
-                  },
-                  icon: (isLiked)
-                      ? const Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        )
-                      : const Icon(
-                          Icons.favorite_border_rounded,
-                        ),
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+      );
   }
 }
 
