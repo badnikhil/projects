@@ -281,7 +281,7 @@ setState(() {
                 textAlign: TextAlign.left,
               ),
             ),
-          SizedBox(height: 130*objects.toDouble(),
+          SizedBox(height: 145*objects.toDouble(),
             child: ListView.builder(scrollDirection: Axis.vertical,physics: const NeverScrollableScrollPhysics(),
               itemCount:objects,cacheExtent: 100000,
               

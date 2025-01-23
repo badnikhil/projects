@@ -1,5 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/homepage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +16,7 @@ class _SignInPageState extends State<SignInPage> {
   bool showpass=false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
+  final storage = const FlutterSecureStorage();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
@@ -74,9 +74,10 @@ class _SignInPageState extends State<SignInPage> {
     try {
       final UserCredential userCredential =
           await _auth.signInWithEmailAndPassword(email: email, password: password);
-
+      await storage.write(key: "UserID", value: userCredential.user?.uid);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid}")),
+      );
       setState(() {
-        
         _isLoading = false;
       });
       return userCredential.user;
@@ -97,9 +98,12 @@ class _SignInPageState extends State<SignInPage> {
     setState(() {
       _isLoading = true;
     });
-
+    final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    await storage.write(key: "UserID", value: userCredential.user?.uid);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid}")),
+      );
     try {
-      setState(() async {
+      setState(() {
         _isLoading = false;
          
       });

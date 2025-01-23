@@ -6,7 +6,7 @@ import 'package:recipe_app/firebase_services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:shimmer/shimmer.dart';
-import 'package:video_player/video_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class RecipeCard extends StatefulWidget {
  final String api;
@@ -36,9 +36,11 @@ class _RecipeCardState extends State<RecipeCard> {
 
 if(mounted) {
   isLiked= await FirebaseServices().isRecipeLiked(data[0]['idMeal']);
-  setState(() {
+  if(mounted) {
+    setState(() {
   isLoading=false;
 });
+  }
 } 
 
 
@@ -126,7 +128,7 @@ if(mounted) {
                                   : '  ${data[0]['strTags']
                                       .toString()
                                       .split(',')
-                                      .join(' ')} ',
+                                      .join(', ')} ',
                               style: const TextStyle(
                                   fontSize: 12, color: Colors.black54),
                               overflow: TextOverflow.ellipsis,
@@ -378,39 +380,72 @@ Widget build(BuildContext context) {
 }
 
 class VideoSection extends StatefulWidget {
-   final  List<dynamic> data;
-  const VideoSection({super.key,required this.data});
+  final List<dynamic> data;
+  const VideoSection({super.key, required this.data});
 
   @override
   State<VideoSection> createState() => _VideoSectionState();
 }
 
 class _VideoSectionState extends State<VideoSection> {
-  late VideoPlayerController _controller;
-  @override
- void initState() {
-  super.initState();
-  _controller = VideoPlayerController.networkUrl(Uri.parse(widget.data[0]['strYoutube'].toString()))
-    ..initialize().then((_) {
-      setState(() {});
-      _controller.play();
-    });
-}
+  late YoutubePlayerController _youtubeController;
 
+  @override
+  void initState() {
+    super.initState();
+    // Extract the YouTube video ID from the URL
+    String videoId = _extractVideoId(widget.data[0]['strYoutube'].toString());
+
+    // Initialize the YouTube Player Controller
+    _youtubeController = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
+        mute: false,
+      ),
+    );
+  }
 
   @override
   void dispose() {
+    _youtubeController.dispose();
     super.dispose();
-    _controller.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return  Container(
-          height: 250.0,color: Colors.amber,
-          child: _controller.value.isInitialized
-              ? VideoPlayer(_controller)
-              : const Center(child: CircularProgressIndicator()),
-        );
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 250.0,
+            color: Colors.amber,
+            child: YoutubePlayer(
+              controller: _youtubeController,
+              showVideoProgressIndicator: true,
+              progressIndicatorColor: Colors.amber,
+              progressColors: const ProgressBarColors(
+                playedColor: Colors.amber,
+                handleColor: Colors.amberAccent,
+              ),
+              onReady: () {
+                debugPrint('YouTube Player is ready.');
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Function to extract the YouTube video ID from a URL
+  String _extractVideoId(String url) {
+    final regExp = RegExp(
+      r'(?:v=|\/)([a-zA-Z0-9_-]{11})',
+      caseSensitive: false,
+    );
+    final match = regExp.firstMatch(url);
+    return match != null ? match.group(1)! : 'dQw4w9WgXcQ'; // Default video ID if invalid URL
   }
 }
 
@@ -430,12 +465,11 @@ List<Map<String, String>> filterIngredients(Map<String, dynamic> recipeData) {
   List<Map<String, String>> ingredients = [];
 
   for (int i = 1; i <= 20; i++) {
-    // Extract ingredient and measure dynamically
+   
     String? ingredient = recipeData['strIngredient$i'];
     String? measure = recipeData['strMeasure$i'];
 
-    // Check if ingredient exists and is not null or empty
-    if (ingredient != null && ingredient.isNotEmpty) {
+      if (ingredient != null && ingredient.isNotEmpty) {
       ingredients.add({
         "ingredient": ingredient,
         "measure": measure ?? "",
