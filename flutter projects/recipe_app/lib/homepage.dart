@@ -7,8 +7,13 @@ import 'package:http/http.dart' as http;
 import 'package:recipe_app/firebase_services.dart';
 import 'package:recipe_app/global.dart';
 import 'package:recipe_app/liked_section.dart';
+import 'package:recipe_app/main.dart';
 
 import 'package:recipe_app/recipe.dart';
+import 'package:recipe_app/search_screen.dart';
+import 'package:recipe_app/signin_page.dart';
+import 'package:recipe_app/storage_services.dart';
+
 import 'package:shimmer/shimmer.dart';
 
 
@@ -47,11 +52,18 @@ setState(() {
 
 
   }
+
+ void updateuid(){
+   SecureStorageServices().getUserID();
+  }
     
   @override
-  void initState() {
+void initState() {
     super.initState();
     fetch();  
+    updateuid();
+
+  print(userID);
   }
 
   @override
@@ -63,13 +75,30 @@ setState(() {
           children: [const Divider(),
            TextButton(
             onPressed: (){
-           }, child: const Row(
+
+                   SecureStorageServices().clearUserID();
+                    print('done');
+                 
+                       Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SignInPage()),
+    );
+           }, child:  Row(
              children: [
-               Text('LOGOUT',style: TextStyle(fontSize: 20),),Spacer(),
+               const Text('LOGOUT',style: TextStyle(fontSize: 20),),const Spacer(),
                Padding(
-                 padding: EdgeInsets.all(8.0),
-                 child: Icon(Icons.power_settings_new_outlined),
-               )
+                 padding: const EdgeInsets.all(8.0),
+                 child: IconButton(icon:const Icon(( Icons.power_settings_new_outlined)),
+                 onPressed:() {
+                   SecureStorageServices().clearUserID();
+                    print('done');
+                 
+                       Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SignInPage()),
+    );
+                 }
+               ))
              ],
            )),
            const Divider(),
@@ -108,9 +137,7 @@ setState(() {
                  
                    IconButton(
                       onPressed: () {
-                            Navigator.push(
-      context,
-       MaterialPageRoute(builder: (context) => const LikedSection()), 
+  Navigator.push(context, MaterialPageRoute(builder: (context) => const LikedSection()), 
     );
                          
                       },
@@ -125,7 +152,7 @@ setState(() {
                   padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
                     onPressed: () {
-        
+                        Navigator.push(context,  MaterialPageRoute(builder: (context) => const SearchScreen())); 
         
                     },
                     icon: const Icon(

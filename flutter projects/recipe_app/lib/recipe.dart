@@ -438,14 +438,14 @@ class _VideoSectionState extends State<VideoSection> {
     );
   }
 
-  // Function to extract the YouTube video ID from a URL
+
   String _extractVideoId(String url) {
     final regExp = RegExp(
       r'(?:v=|\/)([a-zA-Z0-9_-]{11})',
       caseSensitive: false,
     );
     final match = regExp.firstMatch(url);
-    return match != null ? match.group(1)! : 'dQw4w9WgXcQ'; // Default video ID if invalid URL
+    return match != null ? match.group(1)! : 'dQw4w9WgXcQ';
   }
 }
 
@@ -497,7 +497,7 @@ String capitalize(String text) {
 
    @override
   Widget build(BuildContext context) {
-      return               Container(
+      return Container(
         decoration: BoxDecoration(color: const Color.fromARGB(255, 235 , 227, 224),borderRadius: BorderRadius.circular(15)),
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -531,7 +531,7 @@ String capitalize(String text) {
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,fontSize: 20
                             ),
-                            
+
                           ),
                         ),
                         Expanded(child: Text( '${capitalize(ingredients[index]["ingredient"].toString())} (${ingredients[index]["measure"]})',

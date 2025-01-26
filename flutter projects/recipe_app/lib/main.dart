@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:recipe_app/global.dart';
 import 'package:recipe_app/homepage.dart';
 import 'package:recipe_app/signin_page.dart';
 
@@ -22,12 +23,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+ late Future<String?> uid;
  
-  late Future<String?> uid;
+
   @override
   void initState() {
     super.initState();
-   uid=storage.read(key: 'UserID');
+   uid=storage.read(key:'UserID');
     
     
     
@@ -63,6 +65,7 @@ class _MyAppState extends State<MyApp> {
 
         // Navigate based on user ID presence
         final uid = snapshot.data;
+        userID=uid.toString();
         return MaterialApp(
           home: uid == null ? const SignInPage() : const Homepage(),
         );

@@ -19,7 +19,7 @@ void createUserDocument(String userID)async{
     } else {
      
       Map<String, dynamic> userData = {
-        'likedRecipes': [], 
+        'liked': [], 
         
       };
 
@@ -75,7 +75,7 @@ void toggleLike( String mealID) async {
       // If it's already liked, remove it from the array
       FirebaseFirestore.instance
           .collection('userData')
-          .doc(userID)
+          .doc(userID.toString())
           .update({
             'liked': FieldValue.arrayRemove([mealID]), // Removes mealID
           })
@@ -89,7 +89,7 @@ void toggleLike( String mealID) async {
       // If it's not liked, add it to the array
       FirebaseFirestore.instance
           .collection('userData')
-          .doc(userID)
+          .doc(userID.toString())
           .update({
             'liked': FieldValue.arrayUnion([mealID]), // Adds mealID
           })

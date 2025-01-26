@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:recipe_app/firebase_services.dart';
 import 'package:recipe_app/homepage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,7 +48,8 @@ class _SignInPageState extends State<SignInPage> {
       );
 
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
-
+      
+ FirebaseServices().createUserDocument(userCredential.user!.uid.toString());
       setState(() {
         _isLoading = false;
        
@@ -79,6 +81,8 @@ class _SignInPageState extends State<SignInPage> {
       await storage.write(key: "UserID", value: userCredential.user?.uid.toString());
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid.toString()}")),
       );
+
+
       setState(() {
         _isLoading = false;
       });
@@ -87,6 +91,7 @@ class _SignInPageState extends State<SignInPage> {
       setState(() {
         _isLoading = false;
       });
+     
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error during email sign-in: $e")),
@@ -103,9 +108,11 @@ class _SignInPageState extends State<SignInPage> {
     final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     await storage.write(key: "UserID", value: userCredential.user?.uid);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid}")),
-      );
+      );FirebaseServices().createUserDocument(userCredential.user!.uid.toString());
     try {
       setState(() {
+    
+    
         _isLoading = false;
          
       });
@@ -230,12 +237,33 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                       const SizedBox(width: 20),
                       ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
-                        onPressed: () async {
-                          await _registerWithEmailPassword(
-                            _emailController.text.trim(),
-                            _passwordController.text.trim(),
-                          );
-                        },
+                        onPressed: () async{
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter both email and password")),
+      );
+      return;
+    }
+
+    try {
+      await _registerWithEmailPassword(email, password);
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Homepage(),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Registration failed: $e")),
+      );
+    }
+  },
                         child:  Text('Register',style: TextStyle(color: Colors.grey[100]),),
                       ),
                     ],
