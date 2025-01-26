@@ -321,13 +321,15 @@ Widget build(BuildContext context) {
 
 
             Container(margin: const EdgeInsets.only(bottom: 15),
-              child: Center(
-                child: Text(
-                  widget.data[0]['strMeal'].toString(),
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'font1',
-                    color: Color(0xFF333333),
+              child: Expanded(
+                child: Center(
+                  child: Text(
+                    widget.data[0]['strMeal'].toString(),
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'font1',
+                      color: Color(0xFF333333),
+                    ),
                   ),
                 ),
               ),
@@ -416,22 +418,20 @@ class _VideoSectionState extends State<VideoSection> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: Container(
-            height: 250.0,
-            color: Colors.amber,
-            child: YoutubePlayer(
-              controller: _youtubeController,
-              showVideoProgressIndicator: true,
-              progressIndicatorColor: Colors.amber,
-              progressColors: const ProgressBarColors(
-                playedColor: Colors.amber,
-                handleColor: Colors.amberAccent,
-              ),
-              onReady: () {
-                debugPrint('YouTube Player is ready.');
-              },
+        Container(width: MediaQuery.of(context).size.width,
+          height: 250.0,
+          color: Colors.amber,
+          child: YoutubePlayer(
+            controller: _youtubeController,
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Colors.amber,
+            progressColors: const ProgressBarColors(
+              playedColor: Colors.amber,
+              handleColor: Colors.amberAccent,
             ),
+            onReady: () {
+              debugPrint('YouTube Player is ready.');
+            },
           ),
         ),
       ],

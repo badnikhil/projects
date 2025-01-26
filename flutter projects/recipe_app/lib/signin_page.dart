@@ -1,9 +1,10 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:recipe_app/homepage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:recipe_app/main.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -16,7 +17,7 @@ class _SignInPageState extends State<SignInPage> {
   bool showpass=false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final storage = const FlutterSecureStorage();
+ 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
@@ -51,13 +52,14 @@ class _SignInPageState extends State<SignInPage> {
         _isLoading = false;
        
       });
-
+ await storage.write(key: "UserID", value: userCredential.user?.uid.toString());
       return userCredential.user;
     } catch (e) {
       setState(() {
         _isLoading = false;
+     
       });
-
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Error during sign-in: $e")),
       );
@@ -74,8 +76,8 @@ class _SignInPageState extends State<SignInPage> {
     try {
       final UserCredential userCredential =
           await _auth.signInWithEmailAndPassword(email: email, password: password);
-      await storage.write(key: "UserID", value: userCredential.user?.uid);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid}")),
+      await storage.write(key: "UserID", value: userCredential.user?.uid.toString());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid.toString()}")),
       );
       setState(() {
         _isLoading = false;
