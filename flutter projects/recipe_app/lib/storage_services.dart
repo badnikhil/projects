@@ -17,7 +17,6 @@ class SecureStorageServices {
  
   Future<void> clearUserID() async {
     await storage.delete(key: 'UserID');
-    print('successfull');
 
   }
 }

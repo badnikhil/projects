@@ -239,30 +239,22 @@ late String mealID;
  @override
 Widget build(BuildContext context) {
   return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:  const Color.fromARGB(255, 235 , 227, 224),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
-                SizedBox(
+                Container(padding: const EdgeInsets.all(10),decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
                   height: 250,
-                  width: double.infinity,
+                 width: double.maxFinite,
                   child: Image.network(
                     widget.data[0]['strMealThumb'].toString(),
                     fit: BoxFit.cover,
                   ),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.black54, Colors.transparent],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  ),
-                ),
+              
                 Positioned(
                   right: 20,
                   top: 200,
@@ -304,7 +296,7 @@ Widget build(BuildContext context) {
                       children: widget.data[0]['strTags']?.split(',')?.map<Widget>((tag) {
                         return Chip(shape:RoundedRectangleBorder(side: const BorderSide(color:Colors.transparent ),borderRadius: BorderRadius.circular(17)),
                           label: Text(tag.trim()),
-                          backgroundColor: Colors.grey[200],
+                          backgroundColor: Colors.white,
                           
                         );
                       })?.toList() ??
@@ -320,19 +312,23 @@ Widget build(BuildContext context) {
 
 
 
-            Container(margin: const EdgeInsets.only(bottom: 15),
-              child: Expanded(
-                child: Center(
-                  child: Text(
-                    widget.data[0]['strMeal'].toString(),
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontFamily: 'font1',
-                      color: Color(0xFF333333),
+            Row(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Container(decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(25)),padding: const EdgeInsets.symmetric(horizontal: 25),margin: const EdgeInsets.only(bottom: 15),
+                      child: Text(
+                        widget.data[0]['strMeal'].toString(),
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'font1',
+                          color: Color(0xFF333333),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

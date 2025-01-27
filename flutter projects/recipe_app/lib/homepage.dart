@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:recipe_app/firebase_services.dart';
 import 'package:recipe_app/global.dart';
 import 'package:recipe_app/liked_section.dart';
-import 'package:recipe_app/main.dart';
 
 import 'package:recipe_app/recipe.dart';
 import 'package:recipe_app/search_screen.dart';
@@ -63,7 +62,6 @@ void initState() {
     fetch();  
     updateuid();
 
-  print(userID);
   }
 
   @override
@@ -77,7 +75,6 @@ void initState() {
             onPressed: (){
 
                    SecureStorageServices().clearUserID();
-                    print('done');
                  
                        Navigator.pushReplacement(
       context,
@@ -91,7 +88,6 @@ void initState() {
                  child: IconButton(icon:const Icon(( Icons.power_settings_new_outlined)),
                  onPressed:() {
                    SecureStorageServices().clearUserID();
-                    print('done');
                  
                        Navigator.pushReplacement(
       context,

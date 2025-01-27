@@ -106,7 +106,7 @@ class _SignInPageState extends State<SignInPage> {
       _isLoading = true;
     });
     final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    await storage.write(key: "UserID", value: userCredential.user?.uid);
+    await storage.write(key:"UserID", value: userCredential.user?.uid );
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${userCredential.user?.uid}")),
       );FirebaseServices().createUserDocument(userCredential.user!.uid.toString());
     try {
@@ -215,7 +215,7 @@ class _SignInPageState extends State<SignInPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
-                        onPressed: () async {
+                        onPressed: () async { FocusManager.instance.primaryFocus?.unfocus();
                           User? user = await _signInWithEmailPassword(
                             _emailController.text.trim(),
                             _passwordController.text.trim(),
@@ -237,7 +237,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                       const SizedBox(width: 20),
                       ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
-                        onPressed: () async{
+                        onPressed: () async{ FocusManager.instance.primaryFocus?.unfocus();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -258,7 +258,7 @@ class _SignInPageState extends State<SignInPage> {
           ),
         );
       }
-    } catch (e) {
+    } catch (e) {_isLoading=false;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Registration failed: $e")),
       );
@@ -273,7 +273,7 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(height: 20),
      
                   ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent),
-                    onPressed: () async {
+                    onPressed: () async { FocusManager.instance.primaryFocus?.unfocus();
                       User? user = await _signInWithGoogle();
                       if (user != null) {
                         print('Signed in as ${user.displayName}');
