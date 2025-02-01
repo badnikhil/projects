@@ -191,7 +191,7 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(height: 10),
                   TextField(cursorColor: Colors.black26,
                     controller: _passwordController,
-                    obscureText: showpass,
+                    obscureText: !showpass,
                     decoration:  InputDecoration(suffixIcon: Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: IconButton(icon:  const Icon(Icons.lock_outline),onPressed: (){
