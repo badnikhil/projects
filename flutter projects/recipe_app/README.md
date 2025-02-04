@@ -14,14 +14,14 @@
   flutter_secure_storage: ^9.2.4<br>
   animation_search_bar: ^0.0.10<br>
   video_player: ^2.9.2<br>
-  youtube_player_flutter: ^9.1.1<br>
+  youtube_player_flutter: ^9.1.1
 
 ## Environment details
-  flutter sdk 3.24.4
+  flutter sdk 3.24.4<br>
   dart sdk 3.5.4
 
 ## FONTS (avaialable on Google fonts)
- Play-fair display  (https://fonts.google.com/specimen/Playfair+Display)
+ Play-fair display  (https://fonts.google.com/specimen/Playfair+Display)<br>
  Open-sans  (https://fonts.google.com/specimen/Open+Sans)
  
 
