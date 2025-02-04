@@ -3,7 +3,7 @@ RECIPE APP Made on Flutter Integrated with Firebase Authentication and Firebase
 
 
 ## PACKAGES USED
-  cupertino_icons: ^1.0.8\n
+  cupertino_icons: ^1.0.8<br>
   http: ^1.2.2\n
   flutterfire_cli: ^1.0.1\n
   firebase_auth: ^5.4.0\n
