@@ -16,11 +16,11 @@ RECIPE APP Made on Flutter Integrated with Firebase Authentication and Firebase
   video_player: ^2.9.2
   youtube_player_flutter: ^9.1.1
 
-#Environment details
+## Environment details
   flutter sdk 3.24.4
   dart sdk 3.5.4
 
-#FONTS (avaialable on Google fonts)
+## FONTS (avaialable on Google fonts)
  Play-fair display  (https://fonts.google.com/specimen/Playfair+Display)
  Open-sans  (https://fonts.google.com/specimen/Open+Sans)
  
