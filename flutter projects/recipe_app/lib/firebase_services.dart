@@ -8,10 +8,7 @@ class FirebaseServices {
  FirebaseFirestore firestore = FirebaseFirestore.instance;
 void createUserDocument(String userID)async{
   try {
-   
-   
-
-    
+      
     DocumentSnapshot userDoc = await firestore.collection('userData').doc(userID.toString()).get();
 
     if (userDoc.exists) {
