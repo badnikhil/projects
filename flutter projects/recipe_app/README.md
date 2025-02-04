@@ -1,5 +1,5 @@
 
-##RECIPE APP Made on Flutter Integrated with Firebase Authentication and Firebase
+##RECIPE APP MADE WITH FLUTTER WITH DATABASE AND AUTHENTICATION THROUGH FIREBASE
 
 
 ## PACKAGES USED
