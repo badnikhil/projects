@@ -24,7 +24,7 @@
 
 Run the following commands from your terminal:
 
-1) `git clone https://github.com/badnikhil/projects.git` to clone this repository 
+1) `git clone https://github.com/badnikhil/projects.git` to clone this repository <BR>
 WARNING!! THIS WILL CLONE WHOLE REPO ALONG WITH OTHER PROJECTS I AM WORKING ON SEPERATING ALL PROJECTS
 2) `flutter pub get` in the project root directory to install all the required dependencies.
    
