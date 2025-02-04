@@ -3,14 +3,14 @@ RECIPE APP Made on Flutter Integrated with Firebase Authentication and Firebase
 
 
 ## PACKAGES USED
-  cupertino_icons: ^1.0.8
-  http: ^1.2.2
-  flutterfire_cli: ^1.0.1
-  firebase_auth: ^5.4.0
-  firebase_core: ^3.10.0
-  cloud_firestore: ^5.6.1
-  google_sign_in: ^6.2.2
-  shimmer: ^3.0.0
+  cupertino_icons: ^1.0.8\n
+  http: ^1.2.2\n
+  flutterfire_cli: ^1.0.1\n
+  firebase_auth: ^5.4.0\n
+  firebase_core: ^3.10.0\n
+  cloud_firestore: ^5.6.1\n
+  google_sign_in: ^6.2.2\n
+  shimmer: ^3.0.0\n
   flutter_secure_storage: ^9.2.4
   animation_search_bar: ^0.0.10
   video_player: ^2.9.2
