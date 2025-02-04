@@ -1,6 +1,6 @@
 
 ## RECIPE APP
-> Made on FLutter and Integrated with database and authentication through Firebase. <br />
+> Made on Flutter and Integrated with database and authentication through Firebase. <br />
 
 
 ## PACKAGES USED
@@ -20,6 +20,15 @@
 ## Environment details
   flutter sdk 3.24.4<br>
   dart sdk 3.5.4
+## Setup
+
+Run the following commands from your terminal:
+
+1) `git clone https://github.com/badnikhil/projects.git` to clone this repository 
+WARNING!! THIS WILL CLONE WHOLE REPO ALONG WITH OTHER PROJECTS I AM WORKING ON SEPERATING ALL PROJECTS
+2) `flutter pub get` in the project root directory to install all the required dependencies.
+   
+
 
 ## FONTS (avaialable on Google fonts)
  Play-fair display  (https://fonts.google.com/specimen/Playfair+Display)<br>
