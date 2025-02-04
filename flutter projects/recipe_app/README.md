@@ -1,5 +1,6 @@
 
-## RECIPE APP MADE WITH FLUTTER WITH DATABASE AND AUTHENTICATION THROUGH FIREBASE 
+## RECIPE APP
+> Made on FLutter and Integrated with database and authentication through Firebase. <br />
 
 
 ## PACKAGES USED
