@@ -3,7 +3,9 @@
 > Made on Flutter and Integrated with database and authentication through Firebase. <br />
 <p align="center">
   <img src="screenshots/Screenshot from 2025-02-07 15-08-59.png" width="350" >
-  <img src="your_relative_path_here_number_2_large_name" width="350" >
+  <img src="screenshots/Screenshot from 2025-02-07 15-09-19.png" width="350" >
+  <img src="screenshots/Screenshot from 2025-02-07 15-09-24.png" width="350" >
+  <img src="screenshots/Screenshot from 2025-02-07 15-09-30.png" width="350" >
 </p>
 
 ## PACKAGES USED
