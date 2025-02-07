@@ -247,7 +247,7 @@ Widget build(BuildContext context) {
             Stack(
               children: [
                 Container(padding: const EdgeInsets.all(10),decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                  height: 250,
+                  height: 250,  
                  width: double.maxFinite,
                   child: Image.network(
                     widget.data[0]['strMealThumb'].toString(),
