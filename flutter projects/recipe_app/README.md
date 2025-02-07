@@ -1,7 +1,10 @@
 
 ## RECIPE APP
 > Made on Flutter and Integrated with database and authentication through Firebase. <br />
-
+<p align="center">
+  <img src="your_relative_path_here" width="350" >
+  <img src="your_relative_path_here_number_2_large_name" width="350" >
+</p>
 
 ## PACKAGES USED
   cupertino_icons: ^1.0.8<br>
