@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/pages/sign_in_page.dart';
 
 void main(List<String> args) {
   runApp(const MyApp());
@@ -13,6 +14,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    
+    return MaterialApp(themeMode: ThemeMode.system,
+    theme: ThemeData.light(),
+    darkTheme: ThemeData.dark(),
+      home: const SignInPage(),);
   }
 }
