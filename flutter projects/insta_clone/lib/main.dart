@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/pages/homepage.dart';
 import 'package:insta_clone/pages/sign_in_page.dart';
 
 void main(List<String> args) {
@@ -18,6 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(themeMode: ThemeMode.system,
     theme: ThemeData.light(),
     darkTheme: ThemeData.dark(),
-      home: const SignInPage(),);
+      home: const Homepage());
   }
 }
+
